@@ -23,8 +23,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 async function someFunction() {
   try {
-    const updatedList = await DataHandler.updatePokemonAttributes();
-    console.log(updatedList);
+    const updatedList = await DataHandler.UpdateGmaxAndMega();
+    //console.log(updatedList);
   } catch (error) {
     console.error('Error in someFunction:', error);
     // Handle errors

@@ -4,16 +4,14 @@ var app = express();
 
 async function CreatePokemonList() {
   try {
-    const apiPokemonUrl1 = 'https://pokeapi.co/api/v2/pokedex/32/';
+    const apiPokemonUrl1 = 'https://pokeapi.co/api/v2/pokedex/31/';
     const apiPokemonUrl2 = 'https://pokeapi.co/api/v2/pokedex/32/';
     const Data1 = await fetch(apiPokemonUrl1);
     const Data2 = await fetch(apiPokemonUrl2);
     const data1 = await Data1.json();
     const data2 = await Data2.json();
 
-    const data = data1.pokemon_entries.concat(data2.pokemon_entries);
-    // console.log(data);
-    // res.json(data);
+    const data = [...data1.pokemon_entries, ...data2.pokemon_entries];
 
     const pokemonList = data.map((pokemon) => ({
       Type: pokemon.pokemon_species.name,
@@ -49,7 +47,9 @@ async function updatePokemonAttributes() {
           return {
             ...pokemon,
             Breedable: isBreedable,
-            Basic: isBasic
+            Basic: isBasic,
+            Gmax: false,
+            Mega: false,
           };
         } catch (error) {
           console.error(`Error processing details for ${pokemon.name}:`, error);
@@ -73,44 +73,56 @@ async function UpdateGmaxAndMega() {
     await Promise.all(
       pokemonList.map(async (pokemon) => {
         try {
-          const pokemonDetails = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.Pokemonid}/`);
+          const pokemonDetails = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.Pokemonid}/`);
           const PokemonInfo = await pokemonDetails.json();
+          
           const varieties = PokemonInfo.varieties;
 
-          const filteredVarieties = varieties.filter(variety =>
-            variety.pokemon.name.endsWith('-gmax') || variety.pokemon.name.endsWith('-mega')
+          const gmaxVarieties = varieties.find(variety =>
+            variety.pokemon.name.endsWith('-gmax')
+          );
+          const megaVarieties = varieties.find(variety =>
+            variety.pokemon.name.endsWith('-mega')
           );
 
-          const updatedPokemonVarieties = filteredVarieties.map(variety => ({
-            Pokemonid: variety.pokemon.url.split('/').filter(Boolean).pop(),
-            Type: variety.pokemon.name,
-            Basic: false,
-            Breedable: false,
-            Gmax: variety.pokemon.name.endsWith('-gmax'),
-            Mega: variety.pokemon.name.endsWith('-mega')
-          }));
-
-          if (updatedPokemonVarieties.length === 0) {
-            // If no Gmax/Mega varieties found, push the original Pokemon into the updated list
-            updatedPokemonList.push(pokemon);
-          } else {
-            // If Gmax/Mega varieties found, push the updated varieties into the updated list
-            updatedPokemonList.push(...updatedPokemonVarieties);
+          if (gmaxVarieties || megaVarieties) {
+            if (gmaxVarieties) {
+              updatedPokemonList.push({
+                Pokemonid: gmaxVarieties.pokemon.url.split('/').filter(Boolean).pop(),
+                Type: gmaxVarieties.pokemon.name,
+                Basic: false,
+                Breedable: false,
+                Gmax: true,
+                Mega: false
+              });
+            }
+            if (megaVarieties) {
+              updatedPokemonList.push({
+                Pokemonid: megaVarieties.pokemon.url.split('/').filter(Boolean).pop(),
+                Type: megaVarieties.pokemon.name,
+                Basic: false,
+                Breedable: false,
+                Gmax: false,
+                Mega: true
+              });
+            }
           }
         } catch (error) {
           console.error(`Error processing details for ${pokemon.Type}:`, error);
-          // Push the original Pokemon into the updated list in case of an error
-          updatedPokemonList.push(pokemon);
         }
       })
     );
-    //console.log(updatedPokemonList);
-    return updatedPokemonList;
+
+    const appendedList = [...updatedPokemonList, ...pokemonList];
+    return appendedList;
   } catch (error) {
     console.error('Error updating Pokemon attributes:', error);
     throw error;
   }
 }
+
+
+
 
 
 module.exports = {

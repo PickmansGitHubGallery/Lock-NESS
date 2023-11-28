@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1 Mit hold
+  div#section1.section
+    h2 Section 1
+    div.pokemon-list#pokemonList1
+      //- Represent each Pokemon as a draggable image
+      each pokemon in pokemonDataLocation1
+        img.pokemon(src=`/images/${pokemon.sprite}`, alt=pokemon.name, data-id=pokemon.id)
+  div#section2.section
+    h2 Section 2
+    div.pokemon-list#pokemonList2
+      //- Represent each Pokemon as a draggable image
+      each pokemon in pokemonDataLocation2
+        img.pokemon(src=`/images/${pokemon.sprite}`, alt=pokemon.name, data-id=pokemon.id)
+  div#section3.section
+    h2 Section 3
+    div.pokemon-list#pokemonList3
+      //- Represent each Pokemon as a draggable image
+      each pokemon in pokemonDataLocation3
+        img.pokemon(src=`/images/${pokemon.sprite}`, alt=pokemon.name, data-id=pokemon.id)

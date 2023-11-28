@@ -6,3 +6,30 @@ body {
 a {
   color: #00B7FF;
 }
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  gap: 10px; /* Gap between columns */
+  border: 2px solid #ccc;
+  padding: 10px;
+}
+
+.section {
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.sub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Example: Divide each section into a 2x2 grid */
+  gap: 5px; /* Gap between slots */
+  height: 100%; /* Full height of the section */
+}
+
+.slot {
+  border: 1px dashed #999; /* Border for each slot */
+  padding: 5px;
+  box-sizing: border-box;
+  height: 50px; /* Example: Slot height */
+}

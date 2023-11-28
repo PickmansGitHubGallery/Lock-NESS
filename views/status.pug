@@ -1,0 +1,27 @@
+extends layout
+ 
+
+block content
+
+    h1 Pokemon Status
+    div.container
+        div#pokemonList1.section.pokemon-list
+            each pokemon in pokemonByLocation1
+                div.pokemon(data-pokemon-id=pokemon.id)
+                    p Name: #{pokemon.name}
+                    p ID: #{pokemon.id}
+                    p Location: #{pokemon.location}
+
+        div#pokemonList2.section.pokemon-list
+            each pokemon in pokemonByLocation2
+                div.pokemon(data-pokemon-id=pokemon.id)
+                    p Name: #{pokemon.name}
+                    p ID: #{pokemon.id}
+                    p Location: #{pokemon.location}
+
+        div#pokemonList3.section.pokemon-listee
+            each pokemon in pokemonByLocation3
+                div.pokemon(data-pokemon-id=pokemon.id)
+                    p Name: #{pokemon.name}
+                    p ID: #{pokemon.id}
+                    p Location: #{pokemon.location}

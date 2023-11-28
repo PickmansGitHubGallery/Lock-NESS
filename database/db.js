@@ -58,12 +58,14 @@ async function insertPokemonIntoDB(pokemonList) {
 
     db.serialize(() => {
       
-      const insertStatement = db.prepare(`INSERT INTO Pokemon (Type, Pokemonid, Gmax, Basic, Breedable, Mega) VALUES (?, ?, 0, ?, ?, 0)`);
+      const insertStatement = db.prepare(`INSERT INTO Pokemon (Type, Pokemonid, Gmax, Basic, Breedable, Mega) VALUES (?, ?, ? , ?, ?, ?)`);
 
       pokemonList.forEach((pokemon) => {
         const basicInt = pokemon.Basic ? 1 : 0;
         const breedableInt = pokemon.Breedable ? 1 : 0;
-        insertStatement.run(pokemon.Type, pokemon.Pokemonid,basicInt,breedableInt);
+        const gmaxInt = pokemon.Gmax ? 1 : 0;
+        const megaInt = pokemon.Mega ? 1 : 0;
+        insertStatement.run(pokemon.Type, pokemon.Pokemonid, gmaxInt,basicInt, breedableInt, megaInt);
       });
 
       insertStatement.finalize();
@@ -80,7 +82,7 @@ async function insertPokemonIntoDB(pokemonList) {
 
 async function createAndInsertPokemonList() {
   try {
-    const uniquePokemonList = await dataHandler.updatePokemonAttributes();
+    const uniquePokemonList = await dataHandler.UpdateGmaxAndMega();
     await insertPokemonIntoDB(uniquePokemonList);
   } catch (error) {
     console.error(error);

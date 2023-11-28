@@ -70,5 +70,6 @@ async function CreatePokemonList() {
   }
   }
   module.exports = {
-    updatePokemonAttributes: updatePokemonAttributes
+    updatePokemonAttributes: updatePokemonAttributes,
+    CreatePokemonList
   };

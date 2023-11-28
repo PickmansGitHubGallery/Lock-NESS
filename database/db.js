@@ -1,7 +1,9 @@
 const sqlite3 = require('sqlite3');
+//const dataHandler = require('../modules/DataHandler.js')
 
 const path = require('path');
 const { rejects } = require('assert');
+const dataHandler = require('../modules/DataHandler');
 const dbPath = path.join(__dirname,'PokemonDatabase.db');
 const db = new sqlite3.Database(dbPath);
 
@@ -18,7 +20,7 @@ function createUser() {
   }
 function createPokemon() {
   return new Promise((resolve, reject) => {
-    db.run('INSERT INTO Pokemon(Type, Gmax, Free, Basic, Breedable, Mega) VALUES (?, ?, ?, ?,?,?)', ["Charmander", 0,0,1,1,0], function (err) {
+    db.run('INSERT INTO Pokemon(Type, Gmax, Basic, Breedable, Mega) VALUES (?, ?, ?, ?, ?)', ["Charmander", 0,0,1,1,0], function (err) {
       if (err) {
         reject(err);
       } else {
@@ -50,9 +52,47 @@ function getAllBasicPokemons() {
   });
 }
 
+
+async function insertPokemonIntoDB(pokemonList) {
+  try {
+
+    db.serialize(() => {
+      
+      const insertStatement = db.prepare(`INSERT INTO Pokemon (Type, Pokemonid, Gmax, Basic, Breedable, Mega) VALUES (?, ?, 0, ?, ?, 0)`);
+
+      pokemonList.forEach((pokemon) => {
+        const basicInt = pokemon.Basic ? 1 : 0;
+        const breedableInt = pokemon.Breedable ? 1 : 0;
+        insertStatement.run(pokemon.Type, pokemon.Pokemonid,basicInt,breedableInt);
+      });
+
+      insertStatement.finalize();
+    });
+
+    db.close();
+
+    console.log('Pokémon inserted into the database successfully.');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+async function createAndInsertPokemonList() {
+  try {
+    const uniquePokemonList = await dataHandler.updatePokemonAttributes();
+    await insertPokemonIntoDB(uniquePokemonList);
+  } catch (error) {
+    console.error(error);
+    // Handle errors appropriately
+  }
+}
+
+
   module.exports = {
     createUser,
     createPokemon,
     getAllPokemons,
-    getAllBasicPokemons
+    getAllBasicPokemons,
+    createAndInsertPokemonList
   };

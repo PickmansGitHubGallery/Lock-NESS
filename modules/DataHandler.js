@@ -119,6 +119,7 @@ async function UpdateGmaxAndMega() {
     console.error('Error updating Pokemon attributes:', error);
     throw error;
   }
+
 }
 
 
@@ -129,3 +130,5 @@ module.exports = {
   updatePokemonAttributes: updatePokemonAttributes,
   UpdateGmaxAndMega: UpdateGmaxAndMega
 };
+
+    

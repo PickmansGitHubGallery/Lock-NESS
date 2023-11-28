@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var fetch = require("node-fetch");
 var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -24,8 +23,18 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
-DataHandler.CreatePokemonList().then((pokemonList) => {
+const poklist = DataHandler.CreatePokemonList()
+.then((poklist) => {
+  return poklist;
+});
 
+const poklist2 = DataHandler.updatePokemonAttributes(poklist)
+.then((poklist2) => { 
+  console.log(poklist2);
+});
+
+
+//console.log(poklist2);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

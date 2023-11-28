@@ -33,11 +33,13 @@ async function CreatePokemonList() {
       throw error; // Rethrow the error to be caught by the caller or handle it appropriately
     }
   }
-  async function updatePokemonAttributes(pList)
+  async function updatePokemonAttributes()
   {
-    const updatedPokemonList = await Promise.all(
+    try{
+      const pokemonList = await CreatePokemonList();
+      const updatedPokemonList = await Promise.all(
       //for hver pokemon
-      pList.map(async pokemon => {
+      pokemonList.map(async pokemon => {
         try {
           //Hent siden
           const pokemonDetails = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.Pokemonid}/`);
@@ -62,8 +64,11 @@ async function CreatePokemonList() {
       })
     );
     return updatedPokemonList; 
+  } catch (error) {
+    console.error('Error updating Pokemon attributes:', error);
+    throw error; // Rethrow the error to be caught by the caller or handle it appropriately
+  }
   }
   module.exports = {
-    CreatePokemonList: CreatePokemonList,
     updatePokemonAttributes: updatePokemonAttributes
   };

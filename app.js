@@ -21,17 +21,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+async function someFunction() {
+  try {
+    const updatedList = await DataHandler.updatePokemonAttributes();
+    console.log(updatedList);
+  } catch (error) {
+    console.error('Error in someFunction:', error);
+    // Handle errors
+  }
+}
+someFunction();
 
-
-const poklist = DataHandler.CreatePokemonList()
-.then((poklist) => {
-  console.log(poklist);
-  return poklist;
-});
-
-//console.log(poklist2);
-
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });

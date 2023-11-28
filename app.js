@@ -25,14 +25,9 @@ app.use('/users', usersRouter);
 
 const poklist = DataHandler.CreatePokemonList()
 .then((poklist) => {
+  console.log(poklist);
   return poklist;
 });
-
-const poklist2 = DataHandler.updatePokemonAttributes(poklist)
-.then((poklist2) => { 
-  console.log(poklist2);
-});
-
 
 //console.log(poklist2);
 

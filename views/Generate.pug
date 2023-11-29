@@ -2,39 +2,43 @@ extends layout
 
 block content
   .container
-    h1 Generere tilfældige pokemonner
-    p Her kan du generere tilfældige pokemonner
+    h1 Generate random pokemons
     p #{pokemon}
 
     form(action="/Generate" method="post")
       input(type="checkbox" name="Mega" id="Mega")
-      label(for="Mega") Mega
+      label(for="Mega") Allow Mega
       br
       input(type="checkbox" name="Gmax" id="Gmax")
-      label(for="Gmax") Gmax
+      label(for="Gmax") Allow Gmax
       br
       input(type="checkbox" name="Unbreedable" id="Unbreedable")
-      label(for="Unbreedable") Unbreedable
+      label(for="Unbreedable") Allow Unbreedable
       br
-      input(type="checkbox" name="Evolved" id="Evolved")
-      label(for="Evolved") Evolved
+      input(type="checkbox" name="Basic" id="Basic")
+      label(for="Basic") Allow evolved
       br
-      label(for="slider") Choose a value:
+      label(for="slider") Choose a number of pokemons to generate:
       input(type="range" id="slider" name="slider" min="0" max="100" value="50")
       input(type="number" id="sliderInput" name="sliderInput" min="0" max="100" value="50")
       br
-      input(type="submit" value="Generer Pokemon")
+      input(type="submit" value="Generate Pokemon")
 
     script.
-        const slider = document.getElementById("slider");
-        const sliderInput = document.getElementById("sliderInput");
-        slider.addEventListener("input", function() {
+      const slider = document.getElementById("slider");
+      const sliderInput = document.getElementById("sliderInput");
+      slider.addEventListener("input", function() {
         sliderInput.value = this.value;
-        });
+      });
 
-        sliderInput.addEventListener("input", function() {
-          if (parseInt(this.value) >= parseInt(slider.getAttribute("min")) && parseInt(this.value) <= parseInt(slider.getAttribute("max"))) {
-            slider.value = this.value;
-          }
-        });
+      sliderInput.addEventListener("input", function() {
+        if (parseInt(this.value) >= parseInt(slider.getAttribute("min")) && parseInt(this.value) <= parseInt(slider.getAttribute("max"))) {
+          slider.value = this.value;
+        }
+      });
 
+  div.grid-container
+    each pokemon in pokemonList
+      div.grid-row 
+        div.grid-item= pokemon.id + ' ' + pokemon.name
+    

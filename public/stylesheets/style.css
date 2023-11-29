@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+/* Add these styles to your existing CSS stylesheet or include them in a style tag in your HTML/Pug file */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px; /* Adjust the gap between items as needed */
+  overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+  max-height: 400px; /* Set a maximum height for the container, adjust as needed */
+}
+
+.grid-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-item {
+  flex-grow: 1;
+  border: 1px solid #ccc; /* Add a border for better visibility, you can customize this */
+  padding: 10px;
+  text-align: center;
+}

@@ -3,13 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const axios = require('axios');
+
+
 var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var GenerateRouter = require('./routes/Generate');
-const axios = require('axios');
+var TeamRouter = require('./routes/myteam');
 
 const db = require('./database/db.js');
+
+
+
+
 
 var app = express();
 
@@ -26,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/Generate', GenerateRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/myteam', TeamRouter);
 
 
 app.use(function(req, res, next) {

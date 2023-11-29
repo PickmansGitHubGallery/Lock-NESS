@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1= title
+
+  h2 Box
+  #box(class='pokemon-box' data-location='box')
+    each pokemon in boxPokemons
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+        p.small-font= pokemon.Type
+        img(src=`/sprites/${pokemon.Pokemonid}.png`)
+         
+
+  h2 Team
+  #team(class='pokemon-box' data-location='team')
+    each pokemon in teamPokemons
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+        p.small-font= pokemon.Type 
+        img(src=`/sprites/${pokemon.Pokemonid}.png`)
+        
+
+  h2 Graveyard
+  #graveyard(class='pokemon-box' data-location='graveyard')
+    each pokemon in graveyardPokemons
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+        p.small-font= pokemon.Type 
+        img(src=`/sprites/${pokemon.Pokemonid}.png`)
+        
+  button#save-button(type='button') Save Team

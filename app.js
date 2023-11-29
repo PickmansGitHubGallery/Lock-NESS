@@ -7,6 +7,9 @@ var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var GenerateRouter = require('./routes/Generate');
+const axios = require('axios');
+
+const db = require('./database/db.js');
 
 var app = express();
 
@@ -24,9 +27,11 @@ app.use('/Generate', GenerateRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {

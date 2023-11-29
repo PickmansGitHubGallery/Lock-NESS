@@ -6,25 +6,88 @@ body {
 a {
   color: #00B7FF;
 }
+.container {
+  text-align: center;
+}
 
-/* Add these styles to your existing CSS stylesheet or include them in a style tag in your HTML/Pug file */
+.form-container {
+  margin-top: 20px;
+}
+
+.checkbox-label {
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px; /* Adjust margin as needed */
+}
+
+.checkbox-input {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.range-label {
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
+}
+
+.range-input,
+.number-input {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
 
 .grid-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px; /* Adjust the gap between items as needed */
-  overflow-y: auto; /* Add a vertical scrollbar when content overflows */
-  max-height: 400px; /* Set a maximum height for the container, adjust as needed */
+  max-height: 900px;
+  overflow-y: auto;
+  gap: 20px;
+  padding: 20px;
 }
 
-.grid-row {
-  display: flex;
-  justify-content: space-between;
-}
-
+/* CSS for grid items */
 .grid-item {
-  flex-grow: 1;
-  border: 1px solid #ccc; /* Add a border for better visibility, you can customize this */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   text-align: center;
+  font-family: 'Arial', sans-serif; /* Use a similar font or Pokemon-like font */
+}
+
+/* CSS for scaling images */
+.grid-item img {
+  max-width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* CSS for ID and Name */
+.grid-item p {
+  font-size: 16px; /* Adjust the size */
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-transform: uppercase; /* Uppercase text */
+  color: #333; /* Dark color for contrast */
+  font-family: 'Press Start 2P', cursive; /* Use a Pokemon-like font */
 }

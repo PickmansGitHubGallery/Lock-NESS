@@ -51,8 +51,6 @@ function getAllBasicPokemons() {
     });
   });
 }
-
-
 async function insertPokemonIntoDB(pokemonList) {
   try {
 

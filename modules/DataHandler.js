@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
-// image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${...}`
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+
 
 async function CreatePokemonList() {
   try {
@@ -122,13 +125,44 @@ async function UpdateGmaxAndMega() {
 
 }
 
+async function fetchPokemonImages(pokemonList) {
+  const baseURL = 'https://pokeapi.co/api/v2/pokemon/';
 
+  for (const pokemonData of pokemonList) {
+      const PokemonId = pokemonData.Pokemonid;
+      const url = `${baseURL}${PokemonId}`;
 
+      try {
+          const response = await axios.get(url);
 
+          if (!response || response.status !== 200) {
+              console.log(`Error fetching image for Pokemon ${PokemonId}: Invalid response`);
+              continue; // Skip to the next Pokemon on error
+          }
+
+          const data = response.data;
+          const imageUrl = data.sprites.front_default;
+
+          if (imageUrl) {
+              const imageName = `${PokemonId}.png`;
+              const imagePath = path.join(__dirname, '..', 'public', 'sprites', imageName);
+
+              const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+              fs.writeFileSync(imagePath, Buffer.from(imageResponse.data));
+              console.log(`Image for Pokemon ${PokemonId} saved successfully.`);
+          } else {
+              console.log(`Image for Pokemon ${PokemonId} not found.`);
+          }
+      } catch (error) {
+          console.error(`Error fetching image for Pokemon ${PokemonId}: ${error.message}`);
+      }
+  }
+}
 
 module.exports = {
   updatePokemonAttributes: updatePokemonAttributes,
-  UpdateGmaxAndMega: UpdateGmaxAndMega
+  UpdateGmaxAndMega: UpdateGmaxAndMega,
+  fetchPokemonImages:  fetchPokemonImages
 };
 
     

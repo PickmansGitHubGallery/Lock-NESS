@@ -6,6 +6,7 @@ var logger = require('morgan');
 var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var GenerateRouter = require('./routes/Generate');
 
 var app = express();
 
@@ -19,18 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/Generate', GenerateRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-async function someFunction() {
-  try {
-    const updatedList = await DataHandler.UpdateGmaxAndMega();
-    console.log(updatedList);
-  } catch (error) {
-    console.error('Error in someFunction:', error);
-    // Handle errors
-  }
-}
-someFunction();
+
+
+
 
 app.use(function(req, res, next) {
   next(createError(404));

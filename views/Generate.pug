@@ -19,8 +19,8 @@ block content
       label(for="Basic") Allow evolved
       br
       label(for="slider") Choose a number of pokemons to generate:
-      input(type="range" id="slider" name="slider" min="0" max="100" value="50")
-      input(type="number" id="sliderInput" name="sliderInput" min="0" max="100" value="50")
+      input(type="range" id="slider" name="slider" min="0" max="534" value="50")
+      input(type="number" id="sliderInput" name="sliderInput" min="0" max="534" value="50")
       br
       input(type="submit" value="Generate Pokemon")
 
@@ -40,5 +40,5 @@ block content
   div.grid-container
     each pokemon in pokemonList
       div.grid-row 
-        div.grid-item= pokemon.id + ' ' + pokemon.name
+        div.grid-item= pokemon.Pokemonid + ' ' + pokemon.Type
     

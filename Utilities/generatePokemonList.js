@@ -9,26 +9,28 @@ function getRandomInt(min, max) {
 }
 
 function generateRandomPokemons(number, Gmax, Mega, Breedable, Basic){
+  return new Promise((resolve, reject) => {
   filterPokemons(Gmax, Mega, Breedable, Basic)
 .then((filteredPokemons) => {
   
   let genereretPokemoner = [];
   let randomNumberList = [];
   for(let i = 0; i< number; i++){
-    let randomNumber = getRandomInt(1, filteredPokemons.length);
+    let randomNumber = getRandomInt(0, filteredPokemons.length-1);
     if(randomNumberList.includes(randomNumber)){
       i--;
-      console.log(i + 'if statement');
     }
-    else{ 
+    else{
     randomNumberList.push(randomNumber);
     genereretPokemoner.push(filteredPokemons[randomNumber]);
-    console.log(i + 'else statement');
     }
-
   }
-
-  return genereretPokemoner;
+  resolve (genereretPokemoner);
+})
+.catch((error) => {
+  console.error('Error getting Pokémon data:', error);
+  reject(error);
+});
 })
 }
 

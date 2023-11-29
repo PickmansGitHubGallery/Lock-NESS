@@ -6,6 +6,7 @@ const pokemonListe = require('../Utilities/generatePokemonList.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  pokemonListe.generateRandomPokemons(10);
   res.render('index', { title: 'Express' });
 
 });

@@ -13,15 +13,22 @@ function generateRandomPokemons(number){
 .then((pokemons) => {
   
   let genereretPokemoner = [];
-
+  let randomNumberList = [];
   for(let i = 0; i< number; i++){
-    let randomNumber = getRandomInt(1, 200);
-    console.log(randomNumber);
+    let randomNumber = getRandomInt(1, 534);
+    if(randomNumberList.includes(randomNumber)){
+      i--;
+      console.log(i + 'if statement');
+    }
+    else{ 
+    randomNumberList.push(randomNumber);
     genereretPokemoner.push(pokemons[randomNumber]);
+    console.log(i + 'else statement');
+    }
 
   }
 
-  console.log(genereretPokemoner);
+  return genereretPokemoner;
 })
 }
 

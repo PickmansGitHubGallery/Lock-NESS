@@ -6,7 +6,7 @@ block content
     p Her kan du generere tilfældige pokemonner
     p #{pokemon}
 
-    form(action="/submit" method="post")
+    form(action="/Generate" method="post")
       input(type="checkbox" name="Mega" id="Mega")
       label(for="Mega") Mega
       br
@@ -19,15 +19,22 @@ block content
       input(type="checkbox" name="Evolved" id="Evolved")
       label(for="Evolved") Evolved
       br
-
-  body
-    form
       label(for="slider") Choose a value:
       input(type="range" id="slider" name="slider" min="0" max="100" value="50")
-        p(id="SliderValue") Selected value: 50
+      input(type="number" id="sliderInput" name="sliderInput" min="0" max="100" value="50")
+      br
+      input(type="submit" value="Generer Pokemon")
 
     script.
-        document.getElementById("slider").addEventListener("input", function() {
-        document.querySelector("SliderValue").textContent = "Selected value: " + this.value;
-      });
+        const slider = document.getElementById("slider");
+        const sliderInput = document.getElementById("sliderInput");
+        slider.addEventListener("input", function() {
+        sliderInput.value = this.value;
+        });
+
+        sliderInput.addEventListener("input", function() {
+          if (parseInt(this.value) >= parseInt(slider.getAttribute("min")) && parseInt(this.value) <= parseInt(slider.getAttribute("max"))) {
+            slider.value = this.value;
+          }
+        });
 

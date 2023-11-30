@@ -7,27 +7,27 @@ block content
 
     form(action="/Generate" method="post" class="form-container")
       label(for="Mega" class="checkbox-label") Allow Mega
-      input(type="checkbox" name="Mega" id="Mega" class="checkbox-input")
+      input(type="checkbox" name="Mega" id="Mega" class="checkbox-input" onChange = "updateSliderMaxMega()")
       br
       label(for="Gmax" class="checkbox-label") Allow Gmax
       input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input")
       br
       label(for="Unbreedable" class="checkbox-label") Allow Unbreedable
-      input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input")
+      input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input" onChange = "updateSliderMaxUnbreedable()")
       br
       label(for="Basic" class="checkbox-label") Allow evolved
       input(type="checkbox" name="Basic" id="Basic" class="checkbox-input")
       br
       label(for="slider" class="range-label") Choose a number of pokemons to generate:
-      input(type="range" id="slider" name="slider" min="0" max="534" value="50" class="range-input")
-      input(type="number" id="sliderInput" name="sliderInput" min="0" max="534" value="50" class="number-input")
+      input(type="range" id="slider" name="slider" min="0" max="218" value="50" class="range-input")
+      input(type="number" id="sliderInput" name="sliderInput" min="0" max="218" value="50" class="number-input")
       br
       input(type="submit" value="Generate Pokemon" class="submit-button")
-
 
     script.
       const slider = document.getElementById("slider");
       const sliderInput = document.getElementById("sliderInput");
+
       slider.addEventListener("input", function() {
         sliderInput.value = this.value;
       });
@@ -38,6 +38,38 @@ block content
         }
       });
 
+      function updateSliderMaxUnbreedable() {
+        let currentMax = parseInt(slider.getAttribute("max"));
+        const checkbox = document.getElementById("Unbreedable");
+        if (checkbox.checked) {
+          currentMax += 31; // Increase max by 31 for each checked checkbox
+        } else {
+          currentMax -= 31; // Decrease max by 31 for each unchecked checkbox
+        }
+        slider.setAttribute('max', currentMax);
+        sliderInput.setAttribute('max', currentMax);
+        if (parseInt(slider.value) > currentMax) {
+          slider.value = currentMax;
+          sliderInput.value = currentMax;
+        }
+      }
+
+      function updateSliderMaxMega() {
+        let currentMax = parseInt(slider.getAttribute("max"));
+        const checkbox = document.getElementById("Mega");
+        if (checkbox.checked) {
+          currentMax += 20; // Increase max by 20 for each checked checkbox
+        } else {
+          currentMax -= 20; // Decrease max by 20 for each unchecked checkbox
+        }
+        slider.setAttribute('max', currentMax);
+        sliderInput.setAttribute('max', currentMax);
+        if (parseInt(slider.value) > currentMax) {
+          slider.value = currentMax;
+          sliderInput.value = currentMax;
+        }
+      }
+
   div.grid-container
     each pokemon in pokemonList
       div.grid-row 
@@ -45,4 +77,3 @@ block content
           p #{pokemon.Pokemonid}
           p #{pokemon.Type}
           img(src=`/sprites/${pokemon.Pokemonid}.png`, alt=`${pokemon.Pokemonid}`)
-      

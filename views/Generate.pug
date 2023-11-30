@@ -18,13 +18,15 @@ block content
       label(for="Basic" class="checkbox-label") Allow evolved
       input(type="checkbox" name="Basic" id="Basic" class="checkbox-input" onChange = "updateSliderMaxEvolved()")
       br
-      label(for="slider" class="range-label") Choose a number of pokemons to generate:
+      label(for="slider" class="range-label") Choose a number of pokemons to generate, max is 
+        span#DisplayMax 218.
       input(type="range" id="slider" name="slider" min="0" max="218" value="109" class="range-input")
       input(type="number" id="sliderInput" name="sliderInput" min="0" max="218" value="109" class="number-input")
       br
       input(type="submit" value="Generate Pokemon" class="submit-button")
 
     script.
+      const DisplayMax = document.getElementById("DisplayMax"); 
       const slider = document.getElementById("slider");
       const sliderInput = document.getElementById("sliderInput");
 
@@ -46,6 +48,7 @@ block content
         } else {
           currentMax -= 31; 
         }
+        DisplayMax.textContent = currentMax;
         slider.setAttribute('max', currentMax);
         sliderInput.setAttribute('max', currentMax);
         if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
@@ -62,6 +65,7 @@ block content
         } else {
           currentMax -= 20; 
         }
+        DisplayMax.textContent = currentMax;
         slider.setAttribute('max', currentMax);
         sliderInput.setAttribute('max', currentMax);
         if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
@@ -77,6 +81,7 @@ block content
         } else {
           currentMax -= 15; 
         }
+        DisplayMax.textContent = currentMax;
         slider.setAttribute('max', currentMax);
         sliderInput.setAttribute('max', currentMax);
         if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
@@ -92,6 +97,7 @@ block content
         } else {
           currentMax -= 249; 
         }
+        DisplayMax.textContent = currentMax;
         slider.setAttribute('max', currentMax);
         sliderInput.setAttribute('max', currentMax);
         if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {

@@ -7,21 +7,21 @@ block content
 
     form(action="/Generate" method="post" class="form-container")
       label(for="Mega" class="checkbox-label") Allow Mega
-      input(type="checkbox" name="Mega" id="Mega" class="checkbox-input" onChange = "updateSliderMaxMega()")
+      input(type="checkbox" name="Mega" id="Mega" class="checkbox-input" onChange = "updateSliderMaxMega()" checked= Mega)
       br
       label(for="Gmax" class="checkbox-label") Allow Gmax
-      input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input" onChange = "updateSliderMaxGmax()")
+      input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input" onChange = "updateSliderMaxGmax()" checked= Gmax)
       br
       label(for="Unbreedable" class="checkbox-label") Allow Unbreedable
-      input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input" onChange = "updateSliderMaxUnbreedable()")
+      input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input" onChange = "updateSliderMaxUnbreedable()" checked= Unbreedable)
       br
       label(for="Basic" class="checkbox-label") Allow evolved
-      input(type="checkbox" name="Basic" id="Basic" class="checkbox-input" onChange = "updateSliderMaxEvolved()")
+      input(type="checkbox" name="Basic" id="Basic" class="checkbox-input" onChange = "updateSliderMaxEvolved()" checked = Basic)
       br
       label(for="slider" class="range-label") Choose a number of pokemons to generate, max is 
         span#DisplayMax 218.
-      input(type="range" id="slider" name="slider" min="0" max="218" value="109" class="range-input")
-      input(type="number" id="sliderInput" name="sliderInput" min="0" max="218" value="109" class="number-input")
+      input(type="range" id="slider" name="slider" min="0" max="218" value=slider class="range-input")
+      input(type="number" id="sliderInput" name="sliderInput" min="0" max="218" value=sliderInput class="number-input")
       br
       input(type="submit" value="Generate Pokemon" class="submit-button")
 

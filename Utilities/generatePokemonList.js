@@ -62,6 +62,18 @@ function filterPokemons(Gmax, Mega, Breedable, Basic) {
           ) {
             filteredPokemons.push(pokemon);
           }
+          else if (
+            Basic == 0 &&
+            Gmax == 0 &&
+            Mega == 0 &&
+            Breedable && 0 &&
+            pokemon.Basic == 0 &&
+            pokemon.Gmax == 0 &&
+            pokemon.Mega == 0 &&
+            pokemon.Breedable == 0
+          ) {
+            filteredPokemons.push(pokemon);
+          }
         });
         resolve(filteredPokemons);
       })

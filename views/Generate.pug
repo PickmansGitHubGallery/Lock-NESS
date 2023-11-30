@@ -10,17 +10,17 @@ block content
       input(type="checkbox" name="Mega" id="Mega" class="checkbox-input" onChange = "updateSliderMaxMega()")
       br
       label(for="Gmax" class="checkbox-label") Allow Gmax
-      input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input")
+      input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input" onChange = "updateSliderMaxGmax()")
       br
       label(for="Unbreedable" class="checkbox-label") Allow Unbreedable
       input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input" onChange = "updateSliderMaxUnbreedable()")
       br
       label(for="Basic" class="checkbox-label") Allow evolved
-      input(type="checkbox" name="Basic" id="Basic" class="checkbox-input")
+      input(type="checkbox" name="Basic" id="Basic" class="checkbox-input" onChange = "updateSliderMaxEvolved()")
       br
       label(for="slider" class="range-label") Choose a number of pokemons to generate:
-      input(type="range" id="slider" name="slider" min="0" max="218" value="50" class="range-input")
-      input(type="number" id="sliderInput" name="sliderInput" min="0" max="218" value="50" class="number-input")
+      input(type="range" id="slider" name="slider" min="0" max="218" value="109" class="range-input")
+      input(type="number" id="sliderInput" name="sliderInput" min="0" max="218" value="109" class="number-input")
       br
       input(type="submit" value="Generate Pokemon" class="submit-button")
 
@@ -42,33 +42,64 @@ block content
         let currentMax = parseInt(slider.getAttribute("max"));
         const checkbox = document.getElementById("Unbreedable");
         if (checkbox.checked) {
-          currentMax += 31; // Increase max by 31 for each checked checkbox
+          currentMax += 31; 
         } else {
-          currentMax -= 31; // Decrease max by 31 for each unchecked checkbox
+          currentMax -= 31; 
         }
         slider.setAttribute('max', currentMax);
         sliderInput.setAttribute('max', currentMax);
-        if (parseInt(slider.value) > currentMax) {
+        if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-      }
+      };
 
       function updateSliderMaxMega() {
         let currentMax = parseInt(slider.getAttribute("max"));
         const checkbox = document.getElementById("Mega");
         if (checkbox.checked) {
-          currentMax += 20; // Increase max by 20 for each checked checkbox
+          currentMax += 20; 
         } else {
-          currentMax -= 20; // Decrease max by 20 for each unchecked checkbox
+          currentMax -= 20; 
         }
         slider.setAttribute('max', currentMax);
         sliderInput.setAttribute('max', currentMax);
-        if (parseInt(slider.value) > currentMax) {
+        if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-      }
+      };
+      function updateSliderMaxGmax() {
+        let currentMax = parseInt(slider.getAttribute("max"));
+        const checkbox = document.getElementById("Gmax");
+        if (checkbox.checked) {
+          currentMax += 15; 
+        } else {
+          currentMax -= 15; 
+        }
+        slider.setAttribute('max', currentMax);
+        sliderInput.setAttribute('max', currentMax);
+        if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
+          slider.value = currentMax;
+          sliderInput.value = currentMax;
+        }
+      };
+      function updateSliderMaxEvolved() {
+        let currentMax = parseInt(slider.getAttribute("max"));
+        const checkbox = document.getElementById("Basic");
+        if (checkbox.checked) {
+          currentMax += 249; 
+        } else {
+          currentMax -= 249; 
+        }
+        slider.setAttribute('max', currentMax);
+        sliderInput.setAttribute('max', currentMax);
+        if (parseInt(slider.value) > currentMax || parseInt(sliderInput.value) > currentMax) {
+          slider.value = currentMax;
+          sliderInput.value = currentMax;
+        }
+      };
+       
 
   div.grid-container
     each pokemon in pokemonList

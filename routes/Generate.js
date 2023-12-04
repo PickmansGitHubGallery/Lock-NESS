@@ -8,7 +8,7 @@ pokemons = [];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('Generate.pug', { title: 'Generate Pokemons', pokemonList : pokemons, Mega: false, Gmax: false, Unbreedable: false, Basic: false, slider: 1, sliderInput: 1 });
+    res.render('Generate.pug', { title: 'Generate Pokemons', pokemonList : pokemons, Mega: false, Gmax: false, Unbreedable: false, Basic: false, slider: 1, sliderInput: 1, sliderMax: 218 });
 });
 
 
@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
     const CheckBasic= req.body.Basic;
     const slider = req.body.slider;
     const sliderInput = req.body.sliderInput;
-
+    const sliderMax = req.body.sMax;
 
     let Mega = "";
     let Gmax = "";
@@ -55,7 +55,7 @@ router.post('/', function(req, res, next) {
 
         Liste.generateRandomPokemons( req.body.slider, Gmax, Mega, breedable, Basic)
         .then((genereretPokemoner) => {
-            res.render('Generate', { title: 'Generate Pokemons', pokemonList: genereretPokemoner, Mega: !!CheckMega, Gmax: !!CheckGmax, Unbreedable: !!CheckUnbreedable, Basic: !!CheckBasic,  slider: parseInt(slider), sliderInput: parseInt(sliderInput)});
+            res.render('Generate', { title: 'Generate Pokemons', pokemonList: genereretPokemoner, Mega: !!CheckMega, Gmax: !!CheckGmax, Unbreedable: !!CheckUnbreedable, Basic: !!CheckBasic,  slider: parseInt(slider), sliderInput: parseInt(sliderInput), sliderMax: sliderMax});
         });
        
     });

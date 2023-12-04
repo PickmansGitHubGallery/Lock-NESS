@@ -1,15 +1,15 @@
 const sqlite3 = require('sqlite3');
-//const dataHandler = require('../modules/DataHandler.js')
-
 const path = require('path');
 const { rejects } = require('assert');
 const dataHandler = require('../modules/DataHandler');
 const dbPath = path.join(__dirname,'PokemonDatabase.db');
 const db = new sqlite3.Database(dbPath);
+const login = require('../database/login.js');
 
-function createUser() {
+function createUser(email, password, brugernavn) {
     return new Promise((resolve, reject) => {
-      db.run('INSERT INTO User(Email, Password, Username) VALUES (?, ?, ?)', ["hej", "123","hej123"], function (err) {
+      hashedPassword = login.hashPassword(password);
+      db.run('INSERT INTO User(Email, Password, Username) VALUES (?, ?, ?)', [email,hashedPassword,brugernavn], function (err) {
         if (err) {
           reject(err);
         } else {
@@ -53,7 +53,6 @@ function getAllBasicPokemons() {
 }
 async function insertPokemonIntoDB(pokemonList) {
   try {
-
     db.serialize(() => {
       
       const insertStatement = db.prepare(`INSERT INTO Pokemon (Type, Pokemonid, Gmax, Basic, Breedable, Mega) VALUES (?, ?, ? , ?, ?, ?)`);
@@ -68,7 +67,6 @@ async function insertPokemonIntoDB(pokemonList) {
 
       insertStatement.finalize();
     });
-
     db.close();
 
     console.log('Pokémon inserted into the database successfully.');
@@ -87,12 +85,84 @@ async function createAndInsertPokemonList() {
     // Handle errors appropriately
   }
 }
+function getUser(brugernavn) {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM User WHERE Username = ?', [brugernavn], async function (err,user) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(user);
+      }
+    });
+  });
+}
+async function setToken(token, brugernavn) {
+  return new Promise((resolve, reject) => {
+    db.run('UPDATE User SET Token = ? WHERE Username = ?', [token, brugernavn], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        db.get('SELECT * FROM User WHERE Username = ?', [brugernavn], (err, user) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(user);
+          }
+        });
+      }
+    });
+  });
+}
+async function authenticateUser(brugernavn, password) {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM User WHERE Username = ?', [brugernavn], async function (err, userData) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      if (!userData) {
+        reject(new Error('User not found'));
+        return;
+      }
+      // Hash the entered password
+      const enteredPasswordHash = login.hashPassword(password);
 
+      // Compare the hashed entered password with the hashed password from the database
+      if (enteredPasswordHash === userData.password) {
+        resolve(userData); // Resolve with the user data
+      } else {
+        reject(new Error('Incorrect password'));
+      }
+    });
+  });
+}
+
+async function getUserByToken(token) {
+  {
+    return new Promise((resolve, reject) => {
+      db.get('SELECT * FROM User WHERE token = ?', [token], async function (err, userData) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        if (!userData) {
+          reject(new Error('User not found'));
+          return;
+        }
+        resolve(userData);
+    })
+    });
+  }
+
+}
 
   module.exports = {
     createUser,
     createPokemon,
     getAllPokemons,
     getAllBasicPokemons,
-    createAndInsertPokemonList
+    createAndInsertPokemonList,
+    getUser,
+    setToken,
+    authenticateUser
   };

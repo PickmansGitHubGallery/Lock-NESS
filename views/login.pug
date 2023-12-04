@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  if errorMessage
+    p.error= errorMessage
+block content
+  .container
+    h1(style="text-align: center;") Login
+
+    form(action="/login", method="post", class="form-container")
+      label(for="Username") Username:
+      input(type="text", id="Username", name="Username", required)
+
+      label(for="Email") Email:
+      input(type="Email", id="Email", name="Email", required)
+
+      label(for="Password") Password:
+      input(type="Password", id="Password", name="Password", required)
+
+      button(type="submit") Login

@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
     let password = req.body.password;
     db.createUser(email, password, brugernavn)
       .then(() => {
-        //set cookie
         res.redirect('/');
       })
       .catch((err) => {

@@ -18,17 +18,6 @@ function createUser(email, password, brugernavn) {
       });
     });
   }
-function createPokemon() {
-  return new Promise((resolve, reject) => {
-    db.run('INSERT INTO Pokemon(Type, Gmax, Basic, Breedable, Mega) VALUES (?, ?, ?, ?, ?)', ["Charmander", 0,0,1,1,0], function (err) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
 function getAllPokemons() {
   return new Promise((resolve, reject) => {
     db.all('SELECT * FROM Pokemon', async function (err,pokemons) {
@@ -54,7 +43,6 @@ function getAllBasicPokemons() {
 async function insertPokemonIntoDB(pokemonList) {
   try {
     db.serialize(() => {
-      
       const insertStatement = db.prepare(`INSERT INTO Pokemon (Type, Pokemonid, Gmax, Basic, Breedable, Mega) VALUES (?, ?, ? , ?, ?, ?)`);
 
       pokemonList.forEach((pokemon) => {
@@ -75,7 +63,6 @@ async function insertPokemonIntoDB(pokemonList) {
     throw error;
   }
 }
-
 async function createAndInsertPokemonList() {
   try {
     const uniquePokemonList = await dataHandler.UpdateGmaxAndMega();
@@ -136,7 +123,6 @@ async function authenticateUser(brugernavn, password) {
     });
   });
 }
-
 async function getUserByToken(token) {
   {
     return new Promise((resolve, reject) => {
@@ -153,16 +139,40 @@ async function getUserByToken(token) {
     })
     });
   }
-
+}
+async function getMyTeam(user) {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT t.Uid, t.Pid, t.Location, COALESCE(t.Nickname, p.Type) AS Nickname FROM team t INNER JOIN Pokemon p ON t.Pid = p.PokemonId WHERE t.Uid = ?', [user.Userid], async function (err, pokemons) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(pokemons);
+      }
+    });
+  });
+}
+async function updatePokemonLocation(pokemonId, location, userID) {
+  return new Promise((resolve, reject) => {
+    db.run('UPDATE team SET Location = ? WHERE Pid = ? AND Uid = ?', [location, pokemonId, userID], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
 }
 
   module.exports = {
     createUser,
-    createPokemon,
     getAllPokemons,
     getAllBasicPokemons,
     createAndInsertPokemonList,
     getUser,
     setToken,
-    authenticateUser
+    authenticateUser,
+    getUserByToken,
+    getMyTeam,
+    updatePokemonLocation
+    
   };

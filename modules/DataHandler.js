@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
 
 
 async function CreatePokemonList() {
@@ -133,22 +132,23 @@ async function fetchPokemonImages(pokemonList) {
       const url = `${baseURL}${PokemonId}`;
 
       try {
-          const response = await axios.get(url);
+          const response = await fetch(url);
 
           if (!response || response.status !== 200) {
               console.log(`Error fetching image for Pokemon ${PokemonId}: Invalid response`);
               continue; // Skip to the next Pokemon on error
           }
 
-          const data = response.data;
+          const data = await response.json();
           const imageUrl = data.sprites.front_default;
 
           if (imageUrl) {
               const imageName = `${PokemonId}.png`;
               const imagePath = path.join(__dirname, '..', 'public', 'sprites', imageName);
 
-              const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-              fs.writeFileSync(imagePath, Buffer.from(imageResponse.data));
+              const imageResponse = await fetch(imageUrl);
+              const imageData = await imageResponse.arrayBuffer();
+              fs.writeFileSync(imagePath, Buffer.from(imageData));
               console.log(`Image for Pokemon ${PokemonId} saved successfully.`);
           } else {
               console.log(`Image for Pokemon ${PokemonId} not found.`);
@@ -158,6 +158,7 @@ async function fetchPokemonImages(pokemonList) {
       }
   }
 }
+
 
 module.exports = {
   updatePokemonAttributes: updatePokemonAttributes,

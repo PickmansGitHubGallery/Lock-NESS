@@ -31,16 +31,31 @@ document.addEventListener('DOMContentLoaded', () => {
         draggedPokemon.style.left = 'auto';
         draggedPokemon.style.top = 'auto';
         draggedPokemon.classList.remove('dragging');
-        // Update the location of the dropped Pokemon
+        
+        const pokemonId = draggedPokemon.dataset.pokemonid;
+        const userID = draggedPokemon.dataset.userid;
+        updatePokemonLocation(pokemonId, location, userID); // Function to send data to the server
         console.log(`Pokemon ID ${draggedPokemon.dataset.pokemonid} dropped in ${location}`);
       }
     });
   });
-
-  const saveButton = document.getElementById('save-button');
-  saveButton.addEventListener('click', () => {
-    // Logic to save the team and make a POST request with the updated Pokemon locations
-    // You might use fetch or another method to send this data to your server
-    console.log('Team saved!');
-  });
+  function updatePokemonLocation(pokemonId, location, userID) {
+    fetch('/updatePokemonLocation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ pokemonId, location, userID })
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log(`Pokemon ID ${pokemonId} moved to location ${location}`);
+      } else {
+        console.error('Failed to update location');
+      }
+    })
+    .catch(error => {
+      console.error('Error updating location:', error);
+    });
+  }
 });

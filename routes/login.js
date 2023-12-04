@@ -5,8 +5,7 @@ const login = require('../database/login.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-  res.render('login', { title: 'Login' });
+  res.render('login', { title: 'login' });
 });
 
 router.post('/', async function(req, res, next) {
@@ -17,7 +16,7 @@ router.post('/', async function(req, res, next) {
     if (user) {
       const token = login.generateHashToken(brugernavn, login.getCurrentTimestamp());
       await db.setToken(token, brugernavn);
-      res.cookie('token', token);
+      res.cookie('token', token, { maxAge: 900000, path: '/', domain: 'localhost' });
       res.redirect('/');
     } else {
       res.redirect('/login');
@@ -27,3 +26,5 @@ router.post('/', async function(req, res, next) {
     res.redirect('/login');
   }
 });
+
+module.exports = router;

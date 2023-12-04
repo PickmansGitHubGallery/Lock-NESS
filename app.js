@@ -3,17 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const axios = require('axios');
-
 
 var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
 var GenerateRouter = require('./routes/Generate');
 var TeamRouter = require('./routes/myteam');
-var CreateUserRouter = require('./routes/CreateUser');
+var CreateUserRouter = require('./routes/createUser');
+var loginRouter = require('./routes/login');
 
 const db = require('./database/db.js');
-
 var app = express();
 
 // view engine setup
@@ -30,6 +28,7 @@ app.use('/Generate', GenerateRouter);
 app.use('/', indexRouter);
 app.use('/myteam', TeamRouter);
 app.use('/CreateUser', CreateUserRouter);
+app.use('/login', loginRouter);
 
 
 

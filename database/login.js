@@ -20,3 +20,4 @@ function hashPassword(password) {
 }
 
 module.exports = { generateHashToken, hashPassword, getCurrentTimestamp };
+

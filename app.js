@@ -14,10 +14,6 @@ var TeamRouter = require('./routes/myteam');
 
 const db = require('./database/db.js');
 
-
-
-
-
 var app = express();
 
 // view engine setup

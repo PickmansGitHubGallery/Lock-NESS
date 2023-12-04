@@ -18,3 +18,5 @@ function hashPassword(password) {
     
       return formattedDateTime;
 }
+
+module.exports = { generateHashToken, hashPassword, getCurrentTimestamp };

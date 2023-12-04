@@ -1,4 +1,4 @@
-var express = require('express');c
+var express = require('express');
 var router = express.Router();
 const db = require('../database/db.js');
 
@@ -13,13 +13,14 @@ router.get('/', function(req, res, next) {
     let brugernavn = req.body.brugernavn;
     let password = req.body.password;
     db.createUser(email, password, brugernavn)
-    .then(() => {
+      .then(() => {
         //set cookie
-      res.redirect('/');
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect('/createUser');
-    })
-
+        res.redirect('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        res.render('createUser', { title: 'Create User', errorMessage: 'User creation failed. Please try again.' });
+      });
   });
+
+  module.exports = router;

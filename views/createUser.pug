@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+
+  if errorMessage
+    p.error= errorMessage
+block content
+  .container
+    h1(style="text-align: center;") Create User
+
+    form(action="/CreateUser", method="post", class="form-container")
+      label(for="Username") Username:
+      input(type="text", id="Username", name="Username", required)
+
+      label(for="Email") Email:
+      input(type="Email", id="Email", name="Email", required)
+
+      label(for="Password") Password:
+      input(type="Password", id="Password", name="Password", required)
+
+      button(type="submit") Create User
+
+    script.
+      // Your existing script code here (if any)

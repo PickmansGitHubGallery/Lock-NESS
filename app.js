@@ -8,9 +8,9 @@ const axios = require('axios');
 
 var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var GenerateRouter = require('./routes/Generate');
 var TeamRouter = require('./routes/myteam');
+var CreateUserRouter = require('./routes/CreateUser');
 
 const db = require('./database/db.js');
 
@@ -28,13 +28,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/Generate', GenerateRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/myteam', TeamRouter);
+app.use('/CreateUser', CreateUserRouter);
+
 
 
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(404, 'Not Found'));
 });
+
 
 
 // error handler

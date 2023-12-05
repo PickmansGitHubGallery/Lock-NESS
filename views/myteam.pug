@@ -4,7 +4,6 @@ block content
   h1= title
   script(src='/scripts/drag.js')
   h2 Box
-  #pokemon.box
   #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
@@ -17,7 +16,7 @@ block content
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
-        img(src=`/sprites/${pokemon.Pokemonid}.png`)
+        img(src=`/sprites/${pokemon.Pokemonid}.png`)  
         
 
   h2 Graveyard
@@ -27,5 +26,4 @@ block content
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
         
-  button#save-button(type='button') Save Team
   

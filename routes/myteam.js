@@ -13,7 +13,6 @@ router.get('/', function(req, res, next) {
           if (userData) {
             db.getMyTeam(userData)
               .then((myTeam) => {
-                console.log(myTeam);
                 const boxPokemons = myTeam.filter(pokemon => pokemon.Location === 1);
                 const teamPokemons = myTeam.filter(pokemon => pokemon.Location === 2);
                 const graveyardPokemons = myTeam.filter(pokemon => pokemon.Location === 3);
@@ -60,7 +59,6 @@ router.post('/', function(req, res) {
     db.getUserByToken(token)
       .then((userData) => {
         if (userData) {
-          console.log(userData);
           const { pokemonId, location } = req.body;
           let locationNumber;
           if (location == 'box') {

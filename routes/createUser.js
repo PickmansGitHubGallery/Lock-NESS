@@ -12,7 +12,6 @@ router.post('/', async function(req, res, next) {
   let email = req.body.Email;
   let brugernavn = req.body.Username;
   let password = req.body.Password;
-  console.log("Password" + password);
   db.createUser(email, password, brugernavn)
     .then(() => {
       res.redirect('/');

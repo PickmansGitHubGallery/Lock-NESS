@@ -26,7 +26,41 @@ a {
   vertical-align: middle;
   margin-right: 5px;
 }
+#box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(25% - 10px); /* Two slots wide */
+  height: 500px; /* Set the desired height */
+  overflow-y: auto; /* Add a vertical scrollbar */
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
 
+#graveyard {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(25% - 10px); /* Two slots wide */
+  height: 500px; /* Set the desired height */
+  overflow-y: auto; /* Add a vertical scrollbar */
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+#team {
+  position: fixed;
+  bottom: 0;
+  left: 25%;
+  width: 50%; /* Span the width of the screen */
+  display: grid;
+  grid-template-columns: repeat(6, minmax(115px, 1fr)); /* Six items wide */
+  gap: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
 .range-label {
   display: block;
   font-family: 'Press Start 2P', cursive;

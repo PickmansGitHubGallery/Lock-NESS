@@ -16,8 +16,8 @@ router.post('/', async function(req, res, next) {
     if (user) {
       const token = login.generateHashToken(brugernavn, login.getCurrentTimestamp());
       await db.setToken(token, brugernavn);
-      res.cookie('token', token, { maxAge: 90000, path: '/', domain: 'localhost' });
-      res.redirect('/');
+      res.cookie('token', token, { maxAge: 1800000, path: '/', domain: 'localhost' });
+      res.redirect('/myTeam');
     } else {
       res.redirect('/login');
     }

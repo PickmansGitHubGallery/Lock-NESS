@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/Generate', GenerateRouter);
 app.use('/', indexRouter);
-app.use('/myteam', TeamRouter);
+app.use('/myTeam', TeamRouter);
 app.use('/CreateUser', CreateUserRouter);
 app.use('/login', loginRouter);
 

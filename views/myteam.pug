@@ -4,6 +4,7 @@ block content
   h1= title
   script(src='/scripts/drag.js')
   h2 Box
+  #pokemon.box
   #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")

@@ -2,22 +2,43 @@ extends layout
 
 block content
   h1= title
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+  script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js') 
+  link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') 
   script(src='/scripts/drag.js')
+  script.
+    $(document).ready(function(){
+      var pokemonList = !{JSON.stringify(pokemonList)};
+      $('#searchBar').autocomplete({
+        source: pokemonList.map(pokemon => pokemon.Type),
+        minLength: 1,
+      });
+
+      $('#pokemonForm').submit(function(e) {
+        e.preventDefault();
+        var selectedPokemon = $('#searchBar').val();
+        console.log('Selected Pokemon:', selectedPokemon);
+      });
+    });
+  h1 Pokémon Search
+  form#pokemonForm.centered-form(method='POST' action='/selectedPokemon')
+    label(for='searchBar') Search Pokémon:
+    input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
+    button(type='submit') Submit
+
   h2 Box
   #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
-         
 
   h2 Team
   #team(class='pokemon-box' data-location='team')
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
-        img(src=`/sprites/${pokemon.Pokemonid}.png`)  
-        
+        img(src=`/sprites/${pokemon.Pokemonid}.png`)
 
   h2 Graveyard
   #graveyard(class='pokemon-box' data-location='graveyard')
@@ -25,5 +46,3 @@ block content
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
-        
-  

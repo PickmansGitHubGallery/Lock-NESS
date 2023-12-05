@@ -13,11 +13,14 @@ router.get('/', function(req, res, next) {
           if (userData) {
             db.getMyTeam(userData)
               .then((myTeam) => {
+                db.getAllPokemons().then((pokemonList) => {
+                  console.log(pokemonList);
                 const boxPokemons = myTeam.filter(pokemon => pokemon.Location === 1);
                 const teamPokemons = myTeam.filter(pokemon => pokemon.Location === 2);
                 const graveyardPokemons = myTeam.filter(pokemon => pokemon.Location === 3);
-                res.render('myteam', { title: 'My Team', boxPokemons, teamPokemons, graveyardPokemons});
+                res.render('myteam', { title: 'My Team', boxPokemons, teamPokemons, graveyardPokemons,pokemonList});
               })
+            })
               .catch((err) => {
                 console.error('Error while fetching team data:', err);
                 res.status(500).send('Internal Server Error');

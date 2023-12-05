@@ -14,7 +14,7 @@ block content
         minLength: 1,
       });
 
-      $('#submitBtn').click(function(e) {
+      $('#pokemonForm').submit(function(e) {
         e.preventDefault();
         var selectedPokemonName = $('#searchBar').val();
         var selectedPokemon = pokemonList.find(pokemon => pokemon.Type === selectedPokemonName);
@@ -26,7 +26,7 @@ block content
           // Move the selected Pokemon to the box
           $('#box').append(`
             <div class="pokemon" data-pokemonid="${selectedPokemon.Pokemonid}" draggable="true">
-              <p class="small-font">${selectedPokemon.Nickname}</p>
+              <p class="small-font">${selectedPokemon.Type}</p>
               <img src="/sprites/${selectedPokemon.Pokemonid}.png">
             </div>
           `);
@@ -43,8 +43,7 @@ block content
               console.log('Server response:', response);
             },
             error: function(error) {
-              console.error('AJAX request failed:', error);
-              alert('Failed to move Pokémon. Please try again.');
+              console.error('Server error:', error);
             }
           });
 
@@ -55,11 +54,12 @@ block content
     })
 
   h1 Pokémon Search
-  form#pokemonForm.centered-form(method='POST' action='javascript:void(0);')
+  form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')
     label(for='searchBar') Search Pokémon:
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
     button#submitBtn(type='submit') Submit
 
+*
  div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box
   #box(class='pokemon-box' data-location='box')

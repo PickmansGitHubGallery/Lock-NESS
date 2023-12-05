@@ -6,6 +6,7 @@ block content
   script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js') 
   link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') 
   script(src='/scripts/drag.js')
+
   script.
     $(document).ready(function(){
       var pokemonList = !{JSON.stringify(pokemonList)};
@@ -43,20 +44,23 @@ block content
 
   h2 Box
   #box(class='pokemon-box' data-location='box')
+    h2 Box
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
 
-  h2 Team
+  
   #team(class='pokemon-box' data-location='team')
+    h2 Team
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
 
-  h2 Graveyard
+  
   #graveyard(class='pokemon-box' data-location='graveyard')
+    h2 Graveyard
     each pokemon in graveyardPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 

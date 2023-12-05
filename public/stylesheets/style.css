@@ -31,7 +31,7 @@ a {
   top: 0;
   left: 0;
   width: calc(25% - 10px); /* Two slots wide */
-  height: 500px; /* Set the desired height */
+  height: 100%; /* Set the desired height */
   overflow-y: auto; /* Add a vertical scrollbar */
   border: 1px solid #ccc;
   padding: 10px;
@@ -43,7 +43,7 @@ a {
   top: 0;
   right: 0;
   width: calc(25% - 10px); /* Two slots wide */
-  height: 500px; /* Set the desired height */
+  height: 100%; /* Set the desired height */
   overflow-y: auto; /* Add a vertical scrollbar */
   border: 1px solid #ccc;
   padding: 10px;
@@ -52,13 +52,13 @@ a {
 #team {
   position: fixed;
   bottom: 0;
-  left: 25%;
-  width: 50%; /* Span the width of the screen */
+  left: 26%;
+  width: 48%; /* Span the width of the screen */
   display: grid;
   grid-template-columns: repeat(6, minmax(115px, 1fr)); /* Six items wide */
   gap: 5px;
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 0px;
   margin-bottom: 20px;
 }
 .range-label {
@@ -215,6 +215,7 @@ button:hover {
   font-size: 25px; /* Adjust the font size as needed */
   width: 100%;
 }
+
 .centered-form {
   display: flex;
   flex-direction: column;
@@ -222,4 +223,11 @@ button:hover {
   padding: 20px;
   border: 1px solid #ccc;
 }
+
+h1{
+  text-align: center;
+  margin-top: 0px;
+}
+
+
 

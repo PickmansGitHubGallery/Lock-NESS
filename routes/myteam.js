@@ -6,13 +6,14 @@ const Liste = require('../Utilities/generatePokemonList.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    let token = req.cookies.token;
+  let token = req.cookies.token;
     if (token) {
       db.getUserByToken(token)
         .then((userData) => {
           if (userData) {
             db.getMyTeam(userData)
               .then((myTeam) => {
+                console.log(myTeam);
                 const boxPokemons = myTeam.filter(pokemon => pokemon.Location === 1);
                 const teamPokemons = myTeam.filter(pokemon => pokemon.Location === 2);
                 const graveyardPokemons = myTeam.filter(pokemon => pokemon.Location === 3);
@@ -33,9 +34,8 @@ router.get('/', function(req, res, next) {
     } else {
         res.redirect('/login');
     }
-  });
-  //// BRUG DENNE TIL TEST AF GUI
-    /*
+  }); 
+ /*
     Liste.generateRandomPokemons(50, 1, 1, 1, 1)
     .then((genereretPokemoner) => {
         const updatedPokemonList = genereretPokemoner.map((pokemon) => {
@@ -49,9 +49,9 @@ router.get('/', function(req, res, next) {
     })
     .catch((err) => {
         console.log(err);
-    });  
-  */
-    //// BRUG DENNE TIL TEST AF GUI
+    });
+});
+*/
 
 router.post('/updatePokemonLocation', function(req, res) {
         const { pokemonId, location, userID } = req.body;

@@ -165,5 +165,3 @@ module.exports = {
   UpdateGmaxAndMega: UpdateGmaxAndMega,
   fetchPokemonImages:  fetchPokemonImages
 };
-
-    

@@ -1,47 +1,43 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../database/db.js');
+const Liste = require('../Utilities/generatePokemonList.js');
 
-router.post('/', function(req, res) {
+// Tilføj denne funktion til at hente detaljer om en Pokémon fra listen
+function getPokemonDetailsFromList(pokemonList, pokemonType) {
+  return pokemonList.find(pokemon => pokemon.Type === pokemonType);
+}
+
+router.post('/', async function(req, res) {
   let token = req.cookies.token;
+
   if (token) {
-    db.getUserByToken(token)
-      .then((userData) => {
-        if (userData) {
-          const { pokemonId, location, nickname } = req.body;
+    try {
+      const userData = await db.getUserByToken(token);
 
-          // Assuming location can be either 'box', 'team', or 'graveyard'
-          let locationNumber;
-          if (location == 'box') {
-            locationNumber = 1;
-          } else if (location == 'team') {
-            locationNumber = 2;
-          } else if (location == 'graveyard') {
-            locationNumber = 3;
-          } else {
-            // Handle other cases or invalid locations
-            res.status(400).send('Invalid location');
-            return;
-          }
+      if (userData) {
+        const { pokemonSearch, location } = req.body;
+        const userID = userData.Userid;
 
-          // Insert the searched Pokémon into the team
-          db.insertSearchedPokemon(pokemonId, nickname, locationNumber, userData.Userid)
-            .then(() => {
-              res.status(200).send('Searched Pokémon inserted into the team successfully');
-            })
-            .catch((err) => {
-              console.error('Error inserting searched Pokémon:', err);
-              res.status(500).send('Failed to insert searched Pokémon into the team');
-            });
+        // Hent detaljer om den valgte Pokémon
+        const selectedPokemonDetails = getPokemonDetailsFromList(Liste.pokemonList, pokemonSearch);
 
-        } else {
-          res.status(401).send('User not found');
+        if (!selectedPokemonDetails) {
+          res.status(400).send('Invalid Pokémon selection');
+          return;
         }
-      })
-      .catch((err) => {
-        console.error('Error retrieving user data:', err);
-        res.status(500).send('Failed to retrieve user data');
-      });
+
+        // Indsæt Pokémon i team og opdater dens placering i databasen
+        await db.insertPokemonIntoTeam(selectedPokemonDetails.Pokemonid, location, userID);
+
+        res.status(200).send('Pokémon added successfully');
+      } else {
+        res.status(401).send('User not found');
+      }
+    } catch (err) {
+      console.error('Error handling Pokémon selection:', err);
+      res.status(500).send('Failed to handle Pokémon selection');
+    }
   } else {
     res.status(401).send('Token not found');
   }

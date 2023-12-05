@@ -152,28 +152,9 @@ async function getMyTeam(user) {
     });
   });
 }
-
-
 async function updatePokemonLocation(pokemonId, location, userID) {
   return new Promise((resolve, reject) => {
-    let locationNumber;
-
-    switch (location) {
-      case 'box':
-        locationNumber = 1;
-        break;
-      case 'team':
-        locationNumber = 2;
-        break;
-      case 'graveyard':
-        locationNumber = 3;
-        break;
-      default:
-        reject(new Error('Invalid location'));
-        return;
-    }
-
-    db.run('UPDATE team SET Location = ? WHERE Pid = ? AND Uid = ?', [locationNumber, pokemonId, userID], function (err) {
+    db.run('UPDATE team SET Location = ? WHERE Pid = ? AND Uid = ?', [location, pokemonId, userID], function (err) {
       if (err) {
         reject(err);
       } else {
@@ -183,38 +164,21 @@ async function updatePokemonLocation(pokemonId, location, userID) {
   });
 }
 
-async function insertSearchedPokemon(pokemonId, nickname, location, userID) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const pokemon = await new Promise((innerResolve, innerReject) => {
-        db.get('SELECT * FROM Pokemon WHERE PokemonId = ?', [pokemonId], function (err, pokemon) {
-          if (err) {
-            innerReject(err);
-          } else {
-            innerResolve(pokemon);
-          }
-        });
-      });
+async function insertPokemonIntoTeam(pokemonList, pokemonId, location, userID, nickname = '') {
+  try {
+    const pokemonDetails = pokemonList.find(pokemon => pokemon.Pokemonid === pokemonId);
+    const defaultNickname = pokemonDetails ? pokemonDetails.Type : '';
+    const finalNickname = nickname || defaultNickname;
 
-      if (!pokemon) {
-        reject(new Error('Pokemon not found'));
-        return;
-      }
+    await db.run('INSERT INTO team (Uid, Pid, Location, Nickname) VALUES (?, ?, ?, ?)', [userID, pokemonId, location, finalNickname]);
 
-      const defaultLocation = 1;
-
-      db.run('INSERT INTO Team (Uid, Pid, Location, Nickname) VALUES (?, ?, ?, ?)', [userID, pokemonId, defaultLocation, nickname || pokemon.Type], function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
+    return 'Location updated successfully';
+  } catch (err) {
+    console.error('Error inserting Pokemon into team:', err);
+    throw new Error('Failed to insert Pokemon into team');
+  }
 }
+
 
 
 
@@ -229,6 +193,6 @@ async function insertSearchedPokemon(pokemonId, nickname, location, userID) {
     getUserByToken,
     getMyTeam,
     updatePokemonLocation,
-    insertSearchedPokemon
+    insertPokemonIntoTeam
     
   };

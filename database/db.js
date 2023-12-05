@@ -163,25 +163,15 @@ async function updatePokemonLocation(pokemonId, location, userID) {
     });
   });
 }
-
-async function insertPokemonIntoTeam(pokemonList, pokemonId, location, userID, nickname = '') {
+async function insertPokemonIntoTeam(pokemonId, location, userID) {
   try {
-    const pokemonDetails = pokemonList.find(pokemon => pokemon.Pokemonid === pokemonId);
-    const defaultNickname = pokemonDetails ? pokemonDetails.Type : '';
-    const finalNickname = nickname || defaultNickname;
-
-    await db.run('INSERT INTO team (Uid, Pid, Location, Nickname) VALUES (?, ?, ?, ?)', [userID, pokemonId, location, finalNickname]);
-
+    await db.run('INSERT INTO team (Uid, Pid, Location) VALUES (?, ?, ?)', [userID, pokemonId, location]);
     return 'Location updated successfully';
   } catch (err) {
     console.error('Error inserting Pokemon into team:', err);
     throw new Error('Failed to insert Pokemon into team');
   }
 }
-
-
-
-
   module.exports = {
     createUser,
     getAllPokemons,

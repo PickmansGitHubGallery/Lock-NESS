@@ -40,7 +40,7 @@ block content
               location: 'box' // Assuming you are always moving to the box
             },
             success: function(response) {
-              console.log('Server response:', response);
+              window.location.reload();
             },
             error: function(error) {
               console.error('Server error:', error);
@@ -59,8 +59,7 @@ block content
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
     button#submitBtn(type='submit') Submit
 
-*
- div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
+  div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box
   #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons

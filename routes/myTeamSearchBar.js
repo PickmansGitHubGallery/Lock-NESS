@@ -10,27 +10,28 @@ function getPokemonDetailsFromList(pokemonList, pokemonType) {
 
 router.post('/', async function(req, res) {
   let token = req.cookies.token;
-
+  let pokemonID = req.body.pokemonId;
+  let location = req.body.location;
+  let locationNumber = 0;
+  if (location == 'box') {
+    locationNumber = 1;
+  } else if (location == 'team') {
+    locationNumber = 2;
+  } else if (location == 'graveyard') {
+    locationNumber = 3;
+  } else {
+    // Handle other cases or invalid locations
+    res.status(400).send('Invalid location');
+    return;
+  }
   if (token) {
     try {
       const userData = await db.getUserByToken(token);
-
       if (userData) {
-        const { pokemonSearch, location } = req.body;
         const userID = userData.Userid;
-
-        // Hent detaljer om den valgte Pokémon
-        const selectedPokemonDetails = getPokemonDetailsFromList(Liste.pokemonList, pokemonSearch);
-
-        if (!selectedPokemonDetails) {
-          res.status(400).send('Invalid Pokémon selection');
-          return;
-        }
-
         // Indsæt Pokémon i team og opdater dens placering i databasen
-        await db.insertPokemonIntoTeam(selectedPokemonDetails.Pokemonid, location, userID);
-
-        res.status(200).send('Pokémon added successfully');
+        await db.insertPokemonIntoTeam(pokemonID, locationNumber, userID)
+        res.status(200).send('Pokemon successfully inserted into team');
       } else {
         res.status(401).send('User not found');
       }

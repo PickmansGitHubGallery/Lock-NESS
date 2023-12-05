@@ -141,14 +141,6 @@ button:hover {
   width: 100%;
 }
 
-.centered-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid #ccc;
-}
-
 h1{
   text-align: center;
   margin-top: 0px;
@@ -268,4 +260,46 @@ h2{
 
 #graveyard .pokemon::after {
   transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+#searchBar {
+  /* Adjust the styles for the search bar */
+  width: 100%; /* Modify the width as needed */
+  padding: 10px; /* Adjust padding */
+  font-size: 16px; /* Modify font size */
+}
+
+#submitBtn {
+  /* Modify the styles for the submit button */
+  padding: 10px; /* Adjust padding */
+  font-size: 16px; /* Modify font size */
+  width: 100%; /* Adjust width */
+  height: auto; /* Allow height to adjust based on content */
+}
+
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 40%; /* Set the width to 40% of the page */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+#searchBar {
+  /* Adjust the styles for the search bar */
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+#submitBtn {
+  /* Modify the styles for the submit button */
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box; /* Include padding in the width */
 }

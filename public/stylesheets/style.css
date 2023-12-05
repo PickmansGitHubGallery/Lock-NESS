@@ -153,6 +153,9 @@ a {
 #box,
 #graveyard {
   min-height: 200px;
+  font-family: 'Press Start 2P', cursive;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 .small-font {
   font-size: 10px; /* Adjust the font size as needed */
@@ -218,6 +221,6 @@ button:hover {
 h1{
   text-align: center;
   margin-top: 0px;
+  font-family: 'Press Start 2P', cursive;
 }
-
 

@@ -112,10 +112,11 @@ async function authenticateUser(brugernavn, password) {
         return;
       }
       // Hash the entered password
+      
       const enteredPasswordHash = login.hashPassword(password);
-
+      
       // Compare the hashed entered password with the hashed password from the database
-      if (enteredPasswordHash === userData.password) {
+      if (enteredPasswordHash === userData.Password) {
         resolve(userData); // Resolve with the user data
       } else {
         reject(new Error('Incorrect password'));
@@ -142,7 +143,7 @@ async function getUserByToken(token) {
 }
 async function getMyTeam(user) {
   return new Promise((resolve, reject) => {
-    db.all('SELECT t.Uid, t.Pid, t.Location, COALESCE(t.Nickname, p.Type) AS Nickname FROM team t INNER JOIN Pokemon p ON t.Pid = p.PokemonId WHERE t.Uid = ?', [user.Userid], async function (err, pokemons) {
+    db.all('SELECT t.Uid, p.PokemonID, t.Location, COALESCE(t.Nickname, p.Type) AS Nickname FROM team t INNER JOIN Pokemon p ON t.Pid = p.PokemonId WHERE t.Uid = ?', [user.Userid], async function (err, pokemons) {
       if (err) {
         reject(err);
       } else {

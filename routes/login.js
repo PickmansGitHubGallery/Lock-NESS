@@ -10,13 +10,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   try {
-    let brugernavn = req.body.brugernavn;
-    let password = req.body.password;
+    let brugernavn = req.body.Username;
+    let password = req.body.Password;
     const user = await db.authenticateUser(brugernavn, password);
     if (user) {
       const token = login.generateHashToken(brugernavn, login.getCurrentTimestamp());
       await db.setToken(token, brugernavn);
-      res.cookie('token', token, { maxAge: 900000, path: '/', domain: 'localhost' });
+      res.cookie('token', token, { maxAge: 90000, path: '/', domain: 'localhost' });
       res.redirect('/');
     } else {
       res.redirect('/login');

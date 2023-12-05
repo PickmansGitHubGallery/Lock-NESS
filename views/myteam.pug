@@ -2,12 +2,12 @@ extends layout
 
 block content
   h1= title
-
+  script(src='/scripts/drag.js')
   h2 Box
   #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
-        p.small-font= pokemon.Type
+        p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
          
 
@@ -15,7 +15,7 @@ block content
   #team(class='pokemon-box' data-location='team')
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
-        p.small-font= pokemon.Type 
+        p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
         
 
@@ -23,9 +23,8 @@ block content
   #graveyard(class='pokemon-box' data-location='graveyard')
     each pokemon in graveyardPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
-        p.small-font= pokemon.Type 
+        p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
         
   button#save-button(type='button') Save Team
-
-script(src='/scripts/drag.js')
+  

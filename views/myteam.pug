@@ -31,26 +31,42 @@ block content
               <img src="/sprites/${selectedPokemon.Pokemonid}.png">
             </div>
           `);
+
+          // Send data to the server
+          $.ajax({
+            type: 'POST',
+            url: '/myTeamSearchBar',
+            data: {
+              pokemonId: selectedPokemon.Pokemonid,
+              location: 'box' // Assuming you are always moving to the box
+            },
+            success: function(response) {
+              console.log('Server response:', response);
+            },
+            error: function(error) {
+              console.error('Server error:', error);
+            }
+          });
+
         } else {
           console.error('Pokemon not found:', selectedPokemonName);
         }
       });
-    });
+    })
+
   h1 Pokémon Search
-  form#pokemonForm.centered-form(method='POST' action='/selectedPokemon')
+  form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')
     label(for='searchBar') Search Pokémon:
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
-    button(type='submit') Submit
+    button#submitBtn(type='submit') Submit
 
   h2 Box
   #box(class='pokemon-box' data-location='box')
-    h2 Box
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
 
-  
   #team(class='pokemon-box' data-location='team')
     h2 Team
     each pokemon in teamPokemons
@@ -58,7 +74,6 @@ block content
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
 
-  
   #graveyard(class='pokemon-box' data-location='graveyard')
     h2 Graveyard
     each pokemon in graveyardPokemons

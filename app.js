@@ -10,6 +10,7 @@ var GenerateRouter = require('./routes/Generate');
 var TeamRouter = require('./routes/myteam');
 var CreateUserRouter = require('./routes/createUser');
 var loginRouter = require('./routes/login');
+var searchRouter = require('./routes/myTeamSearchBar');
 
 const db = require('./database/db.js');
 var app = express();
@@ -29,6 +30,8 @@ app.use('/', indexRouter);
 app.use('/myTeam', TeamRouter);
 app.use('/CreateUser', CreateUserRouter);
 app.use('/login', loginRouter);
+app.use('/', searchRouter);
+app.use('/myTeamSearchBar', searchRouter);
 
 
 

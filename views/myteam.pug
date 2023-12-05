@@ -3,31 +3,30 @@ extends layout
 block content
   h1= title
   script(src='/scripts/drag.js')
-  //img(src='images/pokeball.png' class= 'pokeball')
- 
-  
-  #box(class='pokemon-box' data-location='box')
+  div(class='background-image') 
+    img(src='images/pokeball.png')
+  div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box
+
+  #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
          
-
-  
+  div(style='position: fixed; bottom: 205px; left: 25%; width: 50%; text-align: center;')
+    h2 Team 
   #team(class='pokemon-box' data-location='team')
-    h2 Team
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)  
         
-
-  
-  #graveyard(class='pokemon-box' data-location='graveyard')
+  div(style='position: absolute; top: 0; right: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Graveyard
+  #graveyard(class='pokemon-box' data-location='graveyard')
     each pokemon in graveyardPokemons
-      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")  
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
         

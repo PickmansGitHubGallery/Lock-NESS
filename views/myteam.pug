@@ -16,8 +16,23 @@ block content
 
       $('#pokemonForm').submit(function(e) {
         e.preventDefault();
-        var selectedPokemon = $('#searchBar').val();
+        var selectedPokemonName = $('#searchBar').val();
+        var selectedPokemon = pokemonList.find(pokemon => pokemon.Type === selectedPokemonName);
+
         console.log('Selected Pokemon:', selectedPokemon);
+
+        // Check if a matching Pokémon was found
+        if (selectedPokemon) {
+          // Move the selected Pokemon to the box
+          $('#box').append(`
+            <div class="pokemon" data-pokemonid="${selectedPokemon.Pokemonid}" draggable="true">
+              <p class="small-font">${selectedPokemon.Type}</p>
+              <img src="/sprites/${selectedPokemon.Pokemonid}.png">
+            </div>
+          `);
+        } else {
+          console.error('Pokemon not found:', selectedPokemonName);
+        }
       });
     });
   h1 Pokémon Search

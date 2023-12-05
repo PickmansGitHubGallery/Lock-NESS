@@ -3,24 +3,27 @@ extends layout
 block content
   h1= title
   script(src='/scripts/drag.js')
-  h2 Box
+  
   #box(class='pokemon-box' data-location='box')
+    h2 Box
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
          
 
-  h2 Team
+  
   #team(class='pokemon-box' data-location='team')
+    h2 Team
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)  
         
 
-  h2 Graveyard
+  
   #graveyard(class='pokemon-box' data-location='graveyard')
+    h2 Graveyard
     each pokemon in graveyardPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 

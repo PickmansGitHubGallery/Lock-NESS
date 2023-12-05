@@ -1,19 +1,16 @@
 extends layout
 
 block content
-
   if errorMessage
     p.error= errorMessage
-block content
-  
-    h1(style="text-align: center;") Login
-    .loginform-container
-      form(action="/login", method="post", class="loginform-container")
-        label(for="Username", id="login-label") Username:
-        input(type="text", id="Username", name="Username", required, class="form-input")
 
-      label(for="Password") Password:
-      input(type="Password", id="Password", name="Password", required)
+  h1(style="text-align: center;") Login
+  .loginform-container
+    form(action="/login", method="post", class="loginform-container")
+      label(for="Username", id="login-label") Username:
+      input(type="text", id="Username", name="Username", required, class="form-input")
+
+      label(for="Password" id="login-label") Password:
+      input(type="password", id="Password", name="Password", required, class="form-input")
 
       button(type="submit") Login
-

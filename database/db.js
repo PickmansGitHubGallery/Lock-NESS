@@ -152,9 +152,28 @@ async function getMyTeam(user) {
     });
   });
 }
+
+
 async function updatePokemonLocation(pokemonId, location, userID) {
   return new Promise((resolve, reject) => {
-    db.run('UPDATE team SET Location = ? WHERE Pid = ? AND Uid = ?', [location, pokemonId, userID], function (err) {
+    let locationNumber;
+
+    switch (location) {
+      case 'box':
+        locationNumber = 1;
+        break;
+      case 'team':
+        locationNumber = 2;
+        break;
+      case 'graveyard':
+        locationNumber = 3;
+        break;
+      default:
+        reject(new Error('Invalid location'));
+        return;
+    }
+
+    db.run('UPDATE team SET Location = ? WHERE Pid = ? AND Uid = ?', [locationNumber, pokemonId, userID], function (err) {
       if (err) {
         reject(err);
       } else {
@@ -163,6 +182,41 @@ async function updatePokemonLocation(pokemonId, location, userID) {
     });
   });
 }
+
+async function insertSearchedPokemon(pokemonId, nickname, location, userID) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const pokemon = await new Promise((innerResolve, innerReject) => {
+        db.get('SELECT * FROM Pokemon WHERE PokemonId = ?', [pokemonId], function (err, pokemon) {
+          if (err) {
+            innerReject(err);
+          } else {
+            innerResolve(pokemon);
+          }
+        });
+      });
+
+      if (!pokemon) {
+        reject(new Error('Pokemon not found'));
+        return;
+      }
+
+      const defaultLocation = 1;
+
+      db.run('INSERT INTO Team (Uid, Pid, Location, Nickname) VALUES (?, ?, ?, ?)', [userID, pokemonId, defaultLocation, nickname || pokemon.Type], function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+
 
   module.exports = {
     createUser,
@@ -174,6 +228,7 @@ async function updatePokemonLocation(pokemonId, location, userID) {
     authenticateUser,
     getUserByToken,
     getMyTeam,
-    updatePokemonLocation
+    updatePokemonLocation,
+    insertSearchedPokemon
     
   };

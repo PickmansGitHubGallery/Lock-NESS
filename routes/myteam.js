@@ -53,16 +53,37 @@ router.get('/', function(req, res, next) {
 });
 */
 
-router.post('/updatePokemonLocation', function(req, res) {
-        const { pokemonId, location, userID } = req.body;
+
+router.post('/', function(req, res) {
+  console.log("Udprint af req.body" + req.body.LocationNumber, req.body.pokemonId, req.body.userID);
+        const { pokemonId, userID } = req.body;
         // TODO: Check valid login before updating location
-        db.updatePokemonLocation(pokemonId, location, userID)
+        LocationNumber;
+        if (req.body.location == 'box') {
+          LocationNumber = 1;
+        }
+
+        if (req.body.location == 'team') {
+          LocationNumber = 2;
+        }
+        if (req.body.location == 'graveyard') {
+          LocationNumber = 3;
+        }
+
+        
+        console.log("Udprint lokation " + LocationNumber, pokemonId, userID);
+        db.updatePokemonLocation(pokemonId, LocationNumber, userID)
           .then(() => {
             res.status(200).send('Location updated successfully');
           })
           .catch((err) => {
             console.error('Error updating location:', err);
-            res.status(500).send('Failed to update location');
+            res.status(500).send('Failed to update location ++++');
           });
       });
+
+
+
+
+
 module.exports = router;

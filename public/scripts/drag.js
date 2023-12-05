@@ -32,20 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
         draggedPokemon.style.top = 'auto';
         draggedPokemon.classList.remove('dragging');
         
-        const pokemonId = draggedPokemon.dataset.pokemonid;
-        const userID = draggedPokemon.dataset.userid;
+        const pokemonId = draggedPokemon.dataset.Pokemonid;
+        const userID = draggedPokemon.dataset.Uid;
         updatePokemonLocation(pokemonId, location, userID); // Function to send data to the server
         console.log(`Pokemon ID ${draggedPokemon.dataset.pokemonid} dropped in ${location}`);
       }
     });
   });
-  function updatePokemonLocation(pokemonId, location, userID) {
-    fetch('/updatePokemonLocation', {
+  function updatePokemonLocation(pokemonId, LocationNumber, userID) {
+    fetch('/myTeam', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ pokemonId, location, userID })
+      body: JSON.stringify({ pokemonId, LocationNumber, userID })
     })
     .then(response => {
       if (response.ok) {

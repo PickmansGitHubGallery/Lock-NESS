@@ -153,6 +153,7 @@ async function getMyTeam(user) {
   });
 }
 async function updatePokemonLocation(pokemonId, location, userID) {
+  console.log("Update pokemon lokation test " + pokemonId, location, userID);
   return new Promise((resolve, reject) => {
     db.run('UPDATE team SET Location = ? WHERE Pid = ? AND Uid = ?', [location, pokemonId, userID], function (err) {
       if (err) {

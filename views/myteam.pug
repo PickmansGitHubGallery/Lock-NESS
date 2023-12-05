@@ -6,7 +6,6 @@ block content
   script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js') 
   link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') 
   script(src='/scripts/drag.js')
-
   script.
     $(document).ready(function(){
       var pokemonList = !{JSON.stringify(pokemonList)};
@@ -61,23 +60,26 @@ block content
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
     button#submitBtn(type='submit') Submit
 
-  #box(class='pokemon-box' data-location='box')
+ div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box
+  #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
-
+         
+  div(style='position: fixed; bottom: 205px; left: 25%; width: 50%; text-align: center;')
+    h2 Team 
   #team(class='pokemon-box' data-location='team')
-    h2 Team
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
         p.small-font= pokemon.Nickname 
-        img(src=`/sprites/${pokemon.Pokemonid}.png`)
-
-  #graveyard(class='pokemon-box' data-location='graveyard')
+        img(src=`/sprites/${pokemon.Pokemonid}.png`)  
+        
+  div(style='position: absolute; top: 0; right: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Graveyard
+  #graveyard(class='pokemon-box' data-location='graveyard')
     each pokemon in graveyardPokemons
-      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")  
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)

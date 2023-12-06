@@ -53,11 +53,10 @@ block content
       });
     })
 
-  h1 Pokémon Search
+  h1 Add new pokemon
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')
-    label(for='searchBar') Search Pokémon:
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
-    button#submitBtn(type='submit') Submit
+    button#submitBtn(type='submit') Add pokemon
 
   div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box

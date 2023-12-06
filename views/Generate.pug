@@ -25,6 +25,8 @@ block content
       br
       input(type="number" id="sMax" name="sMax" value=sliderMax hidden)
       input(type="submit" value="Generate Pokemon" class="submit-button")
+      
+      button(type="button", id="sendButton" class="submit-button" style="float: right") Send Pokemon to team
 
     script.
       const DisplayMax = document.getElementById("DisplayMax"); 
@@ -110,8 +112,38 @@ block content
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-      };
-       
+        };
+      document.getElementById('sendButton').addEventListener('click', function() {
+        
+        // Get the PokemonList variable from the Pug template
+        const pokemonList = !{JSON.stringify(pokemonList)};
+        // Create a new FormData object
+        const formData = new FormData();
+
+        // Append the 'pokemonList' variable to the FormData object directly (without JSON.stringify)
+        formData.append('pokemonList', JSON.stringify(pokemonList));
+
+        for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+          }
+        // Make a POST request using Fetch API
+        fetch('/generateToBox', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text(); // Change this based on your response format
+        })
+        .then(data => {
+          console.log('Response:'); // Log or handle the response from the server
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+        });  
 
   div.grid-container
     each pokemon in pokemonList

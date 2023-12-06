@@ -106,7 +106,7 @@ a {
   text-align: center;
 }
 
-button {
+.login button {
   background-color: #4caf50;
   color: white;
   padding: 10px 15px;
@@ -120,7 +120,7 @@ button {
   font-size: 25px;
 }
 
-button:hover {
+.login button:hover {
   background-color: #45a049;
 }
 #login-label{
@@ -158,7 +158,6 @@ h1{
   width: 1200px;
   height: auto;
 }
-
 
 #box {
   position: absolute;

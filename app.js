@@ -3,6 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const multer = require('multer');
+const upload = multer(); // Initialize multer
+
+const bodyParser = require('body-parser');
+
+
 
 var DataHandler = require('./modules/DataHandler.js');
 var indexRouter = require('./routes/index');
@@ -11,6 +17,7 @@ var TeamRouter = require('./routes/myteam');
 var CreateUserRouter = require('./routes/createUser');
 var loginRouter = require('./routes/login');
 var searchRouter = require('./routes/myTeamSearchBar');
+var generateButtonRouter = require('./routes/generateToBox');
 
 const db = require('./database/db.js');
 var app = express();
@@ -19,9 +26,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(upload.any());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -32,6 +42,7 @@ app.use('/CreateUser', CreateUserRouter);
 app.use('/login', loginRouter);
 app.use('/', searchRouter);
 app.use('/myTeamSearchBar', searchRouter);
+app.use('/generateToBox', generateButtonRouter);
 
 
 

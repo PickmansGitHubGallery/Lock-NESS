@@ -172,6 +172,20 @@ async function insertPokemonIntoTeam(pokemonId, location, userID) {
     throw new Error('Failed to insert Pokemon into team');
   }
 }
+async function insertPokemonListIntoTeam(pokemonList, location, userID) {
+  try {
+    const promises = pokemonList.map(async (pokemon) => {
+      await db.run('INSERT INTO team (Uid, Pid, Location) VALUES (?, ?, ?)', [userID, pokemon.Pokemonid, location]);
+    });
+
+    await Promise.all(promises);
+    
+    return 'All Pokémon inserted into team successfully';
+  } catch (err) {
+    console.error('Error inserting Pokémon into team:', err);
+    throw new Error('Failed to insert Pokémon into team');
+  }
+}
   module.exports = {
     createUser,
     getAllPokemons,
@@ -183,6 +197,7 @@ async function insertPokemonIntoTeam(pokemonId, location, userID) {
     getUserByToken,
     getMyTeam,
     updatePokemonLocation,
-    insertPokemonIntoTeam
+    insertPokemonIntoTeam,
+    insertPokemonListIntoTeam
     
   };

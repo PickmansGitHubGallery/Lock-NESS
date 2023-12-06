@@ -67,7 +67,7 @@ block content
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
          
-  div(style='position: fixed; bottom: 205px; left: 25%; width: 50%; text-align: center;')
+  div(style='position: absolute; bottom: 20%; left: 25%; width: 50%; text-align: center;')
     h2 Team 
   #team(class='pokemon-box' data-location='team')
     each pokemon in teamPokemons

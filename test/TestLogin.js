@@ -10,57 +10,48 @@ describe('Authentication Methods', () => {
     const password = 'mySecurePassword';
     const hashedPassword = loginModule.hashPassword(password);
 
-    // Your assertion here
     expect(hashedPassword).to.be.a('string');
-    // You may also check the length, specific characters, etc.
   });
 
   it('should generate a hash token correctly', () => {
     const username = 'testUser';
     const password = 'mySecurePassword';
     const salt = 'randomSalt';
-
-    // Assuming you have the hashed password from the previous test
     const hashedPassword = loginModule.hashPassword(password);
 
     const token = loginModule.generateHashToken(hashedPassword, salt);
 
-    // Your assertion here
     expect(token).to.be.a('string');
-    // You may also check the length, specific characters, etc.
   });
 
   it('should create a local user with hashed password and token', () => {
     const username = 'testUser';
     const password = 'mySecurePassword';
     const salt = 'randomSalt';
-
-    // Assuming you have the hashed password and token from previous tests
     const hashedPassword = loginModule.hashPassword(password);
     const token = loginModule.generateHashToken(hashedPassword, salt);
-
-    // Your user creation logic here, e.g., save to a database
+    
+    // Create a stored user object
     const storedUser = { hashedPassword: hashedPassword, token: token };
 
-    // Retrieve the user and check if the stored hashed password and token match
-    // Your assertion here
+    // Validate the stored user object's properties
     expect(storedUser.hashedPassword).to.equal(hashedPassword);
     expect(storedUser.token).to.equal(token);
   });
 
-  // Your existing test for the Express app
-  /*it('should return a response on GET /Generate', (done) => {
-    chai
-      .request(app)
-      .get('/Login')  // Update the route to match your actual route
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        // You can add more specific expectations based on your application's behavior
-        // For example, check for the presence of certain content in the response body
-        // expect(res.text).to.contain('SomeExpectedContent');
-        done();
-      });
-  });*/
+  it('should generate identical hashes and tokens with the same input', () => {
+    const password = 'mySecurePassword';
+    const salt = 'randomSalt';
+    // Generate two password hashes using the same password and salt
+    const hashedPassword1 = loginModule.hashPassword(password);
+    const hashedPassword2 = loginModule.hashPassword(password);
 
-  // You can add more tests for other routes and functionality
+    // Generate two tokens using the same hashed password and salt
+    const token1 = loginModule.generateHashToken(hashedPassword1, salt);
+    const token2 = loginModule.generateHashToken(hashedPassword2, salt);
+
+    // Validate that the generated hashes and tokens are identical
+    expect(hashedPassword1).to.equal(hashedPassword2);
+    expect(token1).to.equal(token2);
+  });
 });

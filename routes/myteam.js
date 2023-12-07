@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
             db.getMyTeam(userData)
               .then((myTeam) => {
                 db.getAllPokemons().then((pokemonList) => {
-                 // console.log(pokemonList);
                 const boxPokemons = myTeam.filter(pokemon => pokemon.Location === 1);
                 const teamPokemons = myTeam.filter(pokemon => pokemon.Location === 2);
                 const graveyardPokemons = myTeam.filter(pokemon => pokemon.Location === 3);
@@ -37,24 +36,6 @@ router.get('/', function(req, res, next) {
         res.redirect('/login');
     }
   }); 
- /*
-    Liste.generateRandomPokemons(50, 1, 1, 1, 1)
-    .then((genereretPokemoner) => {
-        const updatedPokemonList = genereretPokemoner.map((pokemon) => {
-            return { ...pokemon, location: Math.floor(Math.random() * 3) + 1 };
-        });
-        const boxPokemons = updatedPokemonList.filter(pokemon => pokemon.location === 1);
-        const teamPokemons = updatedPokemonList.filter(pokemon => pokemon.location === 2);
-        const graveyardPokemons = updatedPokemonList.filter(pokemon => pokemon.location === 3);
-
-        res.render('myteam', { title: 'My Team', boxPokemons, teamPokemons,graveyardPokemons });
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-});
-*/
-
 
 router.post('/', function(req, res) {
   let token = req.cookies.token;

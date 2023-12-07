@@ -51,7 +51,6 @@ router.post('/', function(req, res, next) {
 
         Liste.generateRandomPokemons( req.body.slider, Gmax, Mega, breedable, Basic)
         .then((genereretPokemoner) => {
-            console.log(genereretPokemoner);
             res.render('Generate', { title: 'Generate Pokemons', pokemonList: genereretPokemoner, Mega: !!CheckMega, Gmax: !!CheckGmax, Unbreedable: !!CheckUnbreedable, Basic: !!CheckBasic,  slider: parseInt(slider), sliderInput: parseInt(sliderInput), sliderMax: sliderMax});
         });
        

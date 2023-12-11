@@ -48,6 +48,32 @@ block content
         }
       });
     });
+          $(document).on('click', '.pokemon p.small-font', function() {
+        var newName = prompt('Enter a new name:');
+        if (newName) {
+          var pokemonId = $(this).closest('.pokemon').data('pokemonid');
+          $.post('/updateName', { name: newName, pokemonId: pokemonId })
+            .done(function(data, textStatus, xhr) {
+              // Check for the custom success status code (200)
+              if (xhr.status === 200) {
+                // Reload the page only when the response is successful
+                window.location.reload();
+              } else {
+                // Handle other status codes if needed
+                console.log('Unexpected status code:', xhr.status);
+              }
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+              // Handle failure, including the case when the status is 400
+              if (jqXHR.status === 400) {
+                alert('Invalid nickname');
+              } else {
+                // Handle other errors if needed
+                console.log('Request failed:', errorThrown);
+              }
+            });
+      }});
+
 
   h1 Add new pokemon
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')

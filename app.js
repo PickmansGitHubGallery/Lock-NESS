@@ -18,6 +18,7 @@ var CreateUserRouter = require('./routes/createUser');
 var loginRouter = require('./routes/login');
 var searchRouter = require('./routes/myTeamSearchBar');
 var generateButtonRouter = require('./routes/generateToBox');
+var updateNameRouter = require('./routes/updateName');
 
 const db = require('./database/db.js');
 var app = express();
@@ -43,7 +44,7 @@ app.use('/login', loginRouter);
 app.use('/', searchRouter);
 app.use('/myTeamSearchBar', searchRouter);
 app.use('/generateToBox', generateButtonRouter);
-
+app.use('/updateName', updateNameRouter);
 
 
 app.use(function(req, res, next) {

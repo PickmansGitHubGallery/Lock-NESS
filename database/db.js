@@ -188,6 +188,20 @@ async function insertPokemonListIntoTeam(pokemonList, location, userID) {
     throw new Error('Failed to insert Pokémon into team');
   }
 }
+
+async function updateNickname(nickname, pokemonId, userID) {
+  return new Promise((resolve, reject) => {
+    db.run('UPDATE team SET Nickname = ? WHERE Pid = ? AND Uid = ?', [nickname, pokemonId, userID], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+
   module.exports = {
     createUser,
     getAllPokemons,
@@ -200,6 +214,6 @@ async function insertPokemonListIntoTeam(pokemonList, location, userID) {
     getMyTeam,
     updatePokemonLocation,
     insertPokemonIntoTeam,
-    insertPokemonListIntoTeam
-    
+    insertPokemonListIntoTeam,
+    updateNickname    
   };

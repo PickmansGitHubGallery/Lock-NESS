@@ -48,6 +48,17 @@ block content
         }
       });
     });
+          $(document).on('click', '.pokemon p.small-font', function() {
+        var newName = prompt('Enter a new name:');
+        if (newName) {
+          var pokemonId = $(this).closest('.pokemon').data('pokemonid');
+          $.post('/updateName', { name: newName, pokemonId: pokemonId }, function (data) {
+            // Handle response if needed
+            console.log(data);
+          });
+        }
+      });
+
 
   h1 Add new pokemon
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')

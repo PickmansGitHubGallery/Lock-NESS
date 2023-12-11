@@ -23,14 +23,6 @@ block content
 
         // Check if a matching Pokémon was found
         if (selectedPokemon) {
-          // Move the selected Pokemon to the box
-          $('#box').append(`
-            <div class="pokemon" data-pokemonid="${selectedPokemon.Pokemonid}" draggable="true">
-              <p class="small-font">${selectedPokemon.Type}</p>
-              <img src="/sprites/${selectedPokemon.Pokemonid}.png">
-            </div>
-          `);
-
           // Send data to the server
           $.ajax({
             type: 'POST',
@@ -42,8 +34,12 @@ block content
             success: function(response) {
               window.location.reload();
             },
-            error: function(error) {
-              console.error('Server error:', error);
+            error: function(xhr, status, error) {
+              if (xhr.status === 409) { // Check for conflict status
+                alert('Pokemon already exists!');
+              } else {
+                console.error('Server error:', error);
+              }
             }
           });
 
@@ -51,7 +47,7 @@ block content
           console.error('Pokemon not found:', selectedPokemonName);
         }
       });
-    })
+    });
 
   h1 Add new pokemon
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')

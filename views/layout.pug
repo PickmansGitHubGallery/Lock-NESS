@@ -3,5 +3,36 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    
   body
-    block content
+    nav
+      img.logo(src='images/lapras_pokemon.jpg', alt='Company Logo')
+      div.navbuttons
+        ul
+          li  
+            button(onclick="rdCreateUser()") Create user
+            script.
+             function rdCreateUser() {
+              window.location.href = '/createUser';
+             }
+          li 
+            button(onclick="rdLogin()") Log In
+            script.
+             function rdLogin() {
+              window.location.href = '/login';
+             }
+          li
+            button(onclick="rdForside()") Generate pokemon
+            script.
+             function rdForside() {
+              window.location.href = '/Generate';
+             }
+            
+          li 
+            button(onclick="rdMinside()") My Team
+            script.
+             function rdMinside() {
+              window.location.href = '/myteam';
+             }
+  block content
+  

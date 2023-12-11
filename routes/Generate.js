@@ -6,9 +6,33 @@ const Liste = require('../Utilities/generatePokemonList.js');
 pokemons = [];
 
 
+
+
+
+/* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.render('Generate.pug', { title: 'Generate Pokemons', pokemonList : pokemons, Mega: false, Gmax: false, Unbreedable: false, Basic: false, slider: 1, sliderInput: 1, sliderMax: 218 });
-});
+    let token = req.cookies.token;
+    if (token) {
+      db.getUserByToken(token)
+        .then((userData) => {
+          if (userData) {
+            console.log("Token is present and corresponds to a valid user");
+            res.render('Generate.pug', { title: 'Generate Pokemons', pokemonList: pokemons, Mega: false, Gmax: false, Unbreedable: false, Basic: false, slider: 1, sliderInput: 1, sliderMax: 218 });
+          } else {
+            // Token is present but doesn't correspond to a valid user'
+            res.redirect('/login');
+          }
+        })
+        .catch((err) => {
+          console.error('Error while authenticating token:', err);
+          res.redirect('/login');
+        });
+    } else {
+      // No token is present
+      res.redirect('/login');
+    }
+  });
+  
 
 router.post('/', function(req, res, next) {
 

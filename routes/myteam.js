@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
                 const boxPokemons = myTeam.filter(pokemon => pokemon.Location === 1);
                 const teamPokemons = myTeam.filter(pokemon => pokemon.Location === 2);
                 const graveyardPokemons = myTeam.filter(pokemon => pokemon.Location === 3);
-                res.render('myteam', { title: 'My Team', boxPokemons, teamPokemons, graveyardPokemons,pokemonList});
+                res.render('myteam', { boxPokemons, teamPokemons, graveyardPokemons,pokemonList});
               })
             })
               .catch((err) => {

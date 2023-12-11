@@ -53,6 +53,15 @@ block content
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
     button#submitBtn(type='submit') Add pokemon
+  br
+    
+  .pokemon-info
+    img(src="/images/icon.png", alt="Pokemon Icon", width="50", height="50")
+    .info-box
+        p Click on the name of a pokemon to change its nickname
+        p When you move a pokemon to the graveyard it cannot be recovered
+        p You can only have 6 pokemon in your team
+        p You can only have 1 pokemon of the same type anywhere
 
   div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box

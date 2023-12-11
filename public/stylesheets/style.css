@@ -311,3 +311,39 @@ h2{
   border: 1px solid #f5c6cb;
   border-radius: 5px;
 }
+
+.pokemon-info {
+  position: fixed;
+  top: 16vw;
+  left: 23vw;
+  cursor: pointer; /* Show pointer cursor on hover */
+  display: inline-block; /* Ensure hover area covers the image */
+  position: relative; /* Required for absolute positioning of .info-box */
+  text-align: center; /* Center the contents horizontally */
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+
+}
+
+.pokemon-info img {
+  display: block; /* Ensure the image takes up the container's width */
+  margin: 0 auto; /* Center the image horizontally */
+  opacity: 70%;
+}
+
+.info-box {
+  display: none;
+  position: absolute;
+  top: -10px; /* Adjust this value for positioning from the top */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  width: 150px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Ensure it's above the image */
+}
+
+.pokemon-info:hover .info-box {
+  display: block;
+}

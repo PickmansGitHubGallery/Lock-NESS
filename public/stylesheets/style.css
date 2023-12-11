@@ -1,6 +1,5 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0%;
 }
 
 a {
@@ -47,6 +46,7 @@ a {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-right: 10px;
 }
 
 .submit-button:hover {
@@ -143,7 +143,7 @@ a {
 
 h1{
   text-align: center;
-  margin-top: 0px;
+  margin-top: 50px;
   font-family: 'Press Start 2P', cursive;
 }
 .background-image {
@@ -217,6 +217,7 @@ h1{
   padding: 10px;
   margin-bottom: 20px;
   margin-top: 10px;
+  background-image: 'pokeball.png';
 }
 .pokemon {
   width: 100%;
@@ -346,4 +347,52 @@ h2{
 
 .pokemon-info:hover .info-box {
   display: block;
+
+}
+
+
+.navbuttons {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.navbuttons ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.navbuttons ul li {
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.navbuttons ul li button {
+  font-size: 1.4vw; /* Use vw unit for font size */
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.navbuttons ul li button:hover {
+  transition: 1s;
+  background-color: #007bff;
+}
+
+nav {
+  width: 100%;
+  text-align: center;
+}
+
+.logo-container {
+  display: inline-block;
+}
+
+.logo {
+  width: 7vw;
+  height: 7vw;
+  border-radius: 50%;
+  transition: 1s;
 }

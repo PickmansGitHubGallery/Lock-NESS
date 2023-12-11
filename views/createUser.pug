@@ -3,10 +3,9 @@ extends layout
 block content
   h1= title
 
-  if errorMessage
-    p.error= errorMessage
-block content
   
+block content
+
     h1(style="text-align: center;") Create User
     .loginform-container
       form(action="/createUser", method="post", class="loginform-container")
@@ -18,7 +17,8 @@ block content
 
         label(for="Password", id="login-label") Password:
         input(type="Password", id="Password", name="Password", required, class="form-input")
-        br
+        if errorMessage
+          p.error(class="error-message")= errorMessage
         .login
           button(type="submit", class="login") Create User
       

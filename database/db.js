@@ -164,13 +164,15 @@ async function updatePokemonLocation(pokemonId, location, userID) {
   });
 }
 async function insertPokemonIntoTeam(pokemonId, location, userID) {
-  try {
-    await db.run('INSERT INTO team (Uid, Pid, Location) VALUES (?, ?, ?)', [userID, pokemonId, location]);
-    return 'Location updated successfully';
-  } catch (err) {
-    console.error('Error inserting Pokemon into team:', err);
-    throw new Error('Failed to insert Pokemon into team');
-  }
+  return new Promise((resolve, reject) => {
+    db.run('INSERT INTO team (Uid, Pid, Location) VALUES (?, ?, ?)', [userID, pokemonId, location], function(err) {
+      if (err) {
+        reject(err); // Reject with the error if there's an issue
+      } else {
+        resolve('Location updated successfully'); // Resolve with a success message
+      }
+    });
+  });
 }
 async function insertPokemonListIntoTeam(pokemonList, location, userID) {
   try {

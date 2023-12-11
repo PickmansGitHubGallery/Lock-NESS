@@ -1,9 +1,7 @@
 extends layout
 
 block content
-  if errorMessage
-    p.error= errorMessage
-
+  
   h1(style="text-align: center;") Login
   .loginform-container
     form(action="/login", method="post", class="loginform-container")
@@ -12,5 +10,7 @@ block content
 
       label(for="Password" id="login-label") Password:
       input(type="password", id="Password", name="Password", required, class="form-input")
+      if loginError
+        p.error(class="error-message")= loginError
       .login
         button(type="submit") Login

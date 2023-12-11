@@ -19,11 +19,12 @@ router.post('/', async function(req, res, next) {
       res.cookie('token', token, { maxAge: 1800000, path: '/', domain: 'localhost' });
       res.redirect('/myTeam');
     } else {
-      res.redirect('/login');
+      loginError= "Wrong username or password";;
+      res.render('login', { loginError: loginError });
     }
   } catch (err) {
-    console.log(err);
-    res.redirect('/login');
+    loginError= "Wrong username or password";
+    res.render('login', { loginError: loginError });
   }
 });
 

@@ -13,6 +13,7 @@ router.post('/', async function(req, res) {
   let pokemonID = req.body.pokemonId;
   let location = req.body.location;
   let locationNumber = 0;
+  
   if (location == 'box') {
     locationNumber = 1;
   } else if (location == 'team') {
@@ -24,24 +25,28 @@ router.post('/', async function(req, res) {
     res.status(400).send('Invalid location');
     return;
   }
+  
   if (token) {
-    try {
-      const userData = await db.getUserByToken(token);
-      if (userData) {
-        const userID = userData.Userid;
-        // Indsæt Pokémon i team og opdater dens placering i databasen
-        await db.insertPokemonIntoTeam(pokemonID, locationNumber, userID)
+    db.getUserByToken(token)
+      .then(userData => {
+        if (!userData) {
+          res.status(401).send('User not found');
+        } else {
+          const userID = userData.Userid;
+          return db.insertPokemonIntoTeam(pokemonID, locationNumber, userID);
+        }
+      })
+      .then(() => {
         res.status(200).send('Pokemon successfully inserted into team');
-      } else {
-        res.status(401).send('User not found');
-      }
-    } catch (err) {
-      console.error('Error handling Pokémon selection:', err);
-      res.status(500).send('Failed to handle Pokémon selection');
-    }
+      })
+      .catch(err => {
+          res.status(409).send('Pokemon already exists in the selected location');
+      });
   } else {
     res.status(401).send('Token not found');
   }
 });
+  
+  
 
 module.exports = router;

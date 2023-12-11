@@ -17,8 +17,8 @@ router.post('/', async function(req, res, next) {
       res.redirect('/');
     })
     .catch((err) => {
-      console.log(err);
-      res.render('createUser', { title: 'Create User', errorMessage: 'User creation failed. Please try again.' });
+      errorMessage = "Username already taken, try again"; 
+      res.render('createUser', { title: 'Create User', errorMessage: errorMessage});
     });
 });
 

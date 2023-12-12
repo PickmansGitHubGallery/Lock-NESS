@@ -19,6 +19,7 @@ var loginRouter = require('./routes/login');
 var searchRouter = require('./routes/myTeamSearchBar');
 var generateButtonRouter = require('./routes/generateToBox');
 var updateNameRouter = require('./routes/updateName');
+var evolveRouter = require('./routes/evolve');
 
 const db = require('./database/db.js');
 var app = express();
@@ -45,13 +46,13 @@ app.use('/', searchRouter);
 app.use('/myTeamSearchBar', searchRouter);
 app.use('/generateToBox', generateButtonRouter);
 app.use('/updateName', updateNameRouter);
+app.use('/pokemon/details*', evolveRouter);
 
 
 
 app.use(function(req, res, next) {
   next(createError(404, 'Not Found'));
 });
-
 
 
 // error handler

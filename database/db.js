@@ -221,6 +221,17 @@ async function insertEvolvedPokemonIntoDB(pokemonList) {
     throw error;
   }
 }
+async function getEvolutions(inputID) {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT p.PokemonId, p.Type FROM evolve e INNER JOIN Pokemon p ON e.PokeID = p.PokemonId WHERE e.EvolveFromID = ?', [inputID], async function (err, pokemons) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(pokemons);
+      }
+    });
+  });
+}
 
   module.exports = {
     createUser,
@@ -236,5 +247,6 @@ async function insertEvolvedPokemonIntoDB(pokemonList) {
     insertPokemonIntoTeam,
     insertPokemonListIntoTeam,
     updateNickname,
-    insertEvolvedPokemonIntoDB
+    insertEvolvedPokemonIntoDB,
+    getEvolutions
   };

@@ -409,5 +409,20 @@ nav {
   text-decoration: none;
   display: block;
   font-family: 'Press Start 2P', cursive;
-
+}
+.context-menu {
+  display: none;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 0;
+  list-style: none;
+  z-index: 1000;
+}
+.context-menu li {
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.context-menu li:hover {
+  background-color: #f0f0f0;
 }

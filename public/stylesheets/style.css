@@ -411,3 +411,14 @@ nav {
   font-family: 'Press Start 2P', cursive;
 
 }
+.index-p{
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  opacity: 0.9; 
+  background-color: aliceblue;
+  font-weight: bold;
+}
+.index-p img {
+  max-width: 29%; /* Adjust the percentage as needed */
+  height: auto;   /* This ensures the aspect ratio is maintained */
+}

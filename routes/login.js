@@ -3,9 +3,10 @@ var router = express.Router();
 const db = require('../database/db.js');
 const login = require('../database/login.js');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('login', { title: 'login' });
+  // Check if the user's authentication token is set
+  const loggedIn = req.cookies.token ? true : false;
+  res.render('login', { title: 'login', loggedIn: loggedIn });
 });
 
 router.post('/', async function(req, res, next) {
@@ -19,12 +20,12 @@ router.post('/', async function(req, res, next) {
       res.cookie('token', token, { maxAge: 1800000, path: '/', domain: 'localhost' });
       res.redirect('/myTeam');
     } else {
-      loginError= "Wrong username or password";;
-      res.render('login', { loginError: loginError });
+      loginError= "Wrong username or password";
+      res.render('login', { loginError: loginError, loggedIn: false });
     }
   } catch (err) {
     loginError= "Wrong username or password";
-    res.render('login', { loginError: loginError });
+    res.render('login', { loginError: loginError, loggedIn: false });
   }
 });
 

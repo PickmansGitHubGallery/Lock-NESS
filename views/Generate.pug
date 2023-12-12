@@ -7,16 +7,16 @@ block content
 
     form(action="/Generate" method="post" class="form-container")
       label(for="Mega" class="checkbox-label") Allow Mega
-      input(type="checkbox" name="Mega" id="Mega" class="checkbox-input" onChange = "updateSliderMaxMega()" checked= Mega)
+      input(type="checkbox" name="Mega" id="Mega" class="checkbox-input" onChange="updateSliderMaxMega()" checked=Mega)
       br
       label(for="Gmax" class="checkbox-label") Allow Gmax
-      input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input" onChange = "updateSliderMaxGmax()" checked= Gmax)
+      input(type="checkbox" name="Gmax" id="Gmax" class="checkbox-input" onChange="updateSliderMaxGmax()" checked=Gmax)
       br
       label(for="Unbreedable" class="checkbox-label") Allow Unbreedable
-      input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input" onChange = "updateSliderMaxUnbreedable()" checked= Unbreedable)
+      input(type="checkbox" name="Unbreedable" id="Unbreedable" class="checkbox-input" onChange="updateSliderMaxUnbreedable()" checked=Unbreedable)
       br
       label(for="Basic" class="checkbox-label") Allow evolved
-      input(type="checkbox" name="Basic" id="Basic" class="checkbox-input" onChange = "updateSliderMaxEvolved()" checked = Basic)
+      input(type="checkbox" name="Basic" id="Basic" class="checkbox-input" onChange="updateSliderMaxEvolved()" checked=Basic)
       br
       label(for="slider" class="range-label") Choose a number of pokemons to generate, max is 
         span#DisplayMax #{sliderMax}
@@ -25,9 +25,9 @@ block content
       br
       input(type="number" id="sMax" name="sMax" value=sliderMax hidden)
       input(type="submit" value="Generate Pokemon" class="submit-button")
-      
-      button(type="button", id="sendButton" class="submit-button") Send Pokemon to team
-
+    form(action="/myTeam" method="get" class="form-container")
+      button(type="submit", id="sendButton", class="submit-button") Send Pokemon to team
+    
     script.
       const DisplayMax = document.getElementById("DisplayMax"); 
       const slider = document.getElementById("slider");
@@ -50,7 +50,7 @@ block content
         if (checkbox.checked) {
           currentMax += 31;
         } else {
-          currentMax -= 31
+          currentMax -= 31;
         }
         sMax.value = currentMax;
         DisplayMax.textContent = currentMax;
@@ -60,7 +60,7 @@ block content
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-      };
+      }
 
       function updateSliderMaxMega() {
         let currentMax = parseInt(slider.getAttribute("max"));
@@ -78,7 +78,8 @@ block content
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-      };
+      }
+
       function updateSliderMaxGmax() {
         let currentMax = parseInt(slider.getAttribute("max"));
         const checkbox = document.getElementById("Gmax");
@@ -95,7 +96,8 @@ block content
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-      };
+      }
+
       function updateSliderMaxEvolved() {
         let currentMax = parseInt(slider.getAttribute("max"));
         const checkbox = document.getElementById("Basic");
@@ -112,7 +114,8 @@ block content
           slider.value = currentMax;
           sliderInput.value = currentMax;
         }
-        };
+      }
+
       document.getElementById('sendButton').addEventListener('click', function() {
         
         // Get the PokemonList variable from the Pug template
@@ -124,8 +127,8 @@ block content
         formData.append('pokemonList', JSON.stringify(pokemonList));
 
         for (let pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-          }
+          console.log(pair[0] + ', ' + pair[1]);
+        }
         // Make a POST request using Fetch API
         fetch('/generateToBox', {
           method: 'POST',
@@ -143,8 +146,7 @@ block content
         .catch(error => {
           console.error('Error:', error);
         });
-        });  
-
+      });
   div.grid-container
     each pokemon in pokemonList
       div.grid-row 

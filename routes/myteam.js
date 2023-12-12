@@ -3,39 +3,39 @@ var router = express.Router();
 const db = require('../database/db.js');
 const Liste = require('../Utilities/generatePokemonList.js');
 
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   let token = req.cookies.token;
-    if (token) {
-      db.getUserByToken(token)
-        .then((userData) => {
-          if (userData) {
-            db.getMyTeam(userData)
-              .then((myTeam) => {
-                db.getAllPokemons().then((pokemonList) => {
+  const loggedIn = token ? true : false;
+  if (token) {
+    db.getUserByToken(token)
+      .then((userData) => {
+        if (userData) {
+          db.getMyTeam(userData)
+            .then((myTeam) => {
+              db.getAllPokemons().then((pokemonList) => {
                 const boxPokemons = myTeam.filter(pokemon => pokemon.Location === 1);
                 const teamPokemons = myTeam.filter(pokemon => pokemon.Location === 2);
                 const graveyardPokemons = myTeam.filter(pokemon => pokemon.Location === 3);
-                res.render('myteam', { boxPokemons, teamPokemons, graveyardPokemons,pokemonList});
+                res.render('myteam', { boxPokemons, teamPokemons, graveyardPokemons, pokemonList, loggedIn });
               })
             })
-              .catch((err) => {
-                console.error('Error while fetching team data:', err);
-                res.status(500).send('Internal Server Error');
-              });
-          } else {
-            res.redirect('/login');
-          }
-        })
-        .catch((err) => {
-          console.error('Error while authenticating token:', err);
+            .catch((err) => {
+              console.error('Error while fetching team data:', err);
+              res.status(500).send('Internal Server Error');
+            });
+        } else {
           res.redirect('/login');
-        });
-    } else {
+        }
+      })
+      .catch((err) => {
+        console.error('Error while authenticating token:', err);
         res.redirect('/login');
-    }
-  }); 
+      });
+  } else {
+      res.redirect('/login');
+  }
+}); 
 
 router.post('/', function(req, res) {
   let token = req.cookies.token;
@@ -77,9 +77,5 @@ router.post('/', function(req, res) {
     res.status(401).send('Token not found');
   }
 });
-
-
-
-
 
 module.exports = router;

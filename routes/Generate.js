@@ -9,30 +9,36 @@ pokemons = [];
 
 
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-    let token = req.cookies.token;
-    if (token) {
-      db.getUserByToken(token)
-        .then((userData) => {
-          if (userData) {
-            console.log("Token is present and corresponds to a valid user");
-            res.render('Generate.pug', { title: 'Generate Pokemons', pokemonList: pokemons, Mega: false, Gmax: false, Unbreedable: false, Basic: false, slider: 1, sliderInput: 1, sliderMax: 218 });
-          } else {
-            // Token is present but doesn't correspond to a valid user'
-            res.redirect('/login');
-          }
-        })
-        .catch((err) => {
-          console.error('Error while authenticating token:', err);
+  let token = req.cookies.token;
+  const loggedIn = token ? true : false;
+  if (token) {
+    db.getUserByToken(token)
+      .then((userData) => {
+        if (userData) {
+          console.log("Token is present and corresponds to a valid user");
+          res.render('Generate.pug', { title: 'Generate Pokemons', pokemonList: pokemons, Mega: false, Gmax: false, Unbreedable: false, Basic: false, slider: 1, sliderInput: 1, sliderMax: 218, loggedIn: loggedIn });
+        } else {
+          // Token is present but doesn't correspond to a valid user'
           res.redirect('/login');
-        });
-    } else {
-      // No token is present
-      res.redirect('/login');
-    }
-  });
+        }
+      })
+      .catch((err) => {
+        console.error('Error while authenticating token:', err);
+        res.redirect('/login');
+      });
+  } else {
+    // No token is present
+    res.redirect('/login');
+  }
+});
   
+  /* GET myteam page. */
+router.get('/myTeam', function(req, res, next) {
+  // Handle the redirection logic here
+  console.log('Redirecting to myteam');
+  res.redirect('myteam');
+});
 
 router.post('/', function(req, res, next) {
 
@@ -73,11 +79,13 @@ router.post('/', function(req, res, next) {
         Basic = 1;
     }
 
-        Liste.generateRandomPokemons( req.body.slider, Gmax, Mega, breedable, Basic)
-        .then((genereretPokemoner) => {
-            res.render('Generate', { title: 'Generate Pokemons', pokemonList: genereretPokemoner, Mega: !!CheckMega, Gmax: !!CheckGmax, Unbreedable: !!CheckUnbreedable, Basic: !!CheckBasic,  slider: parseInt(slider), sliderInput: parseInt(sliderInput), sliderMax: sliderMax});
-        });
-       
+    Liste.generateRandomPokemons( req.body.slider, Gmax, Mega, breedable, Basic)
+    .then((genereretPokemoner) => {
+      const loggedIn = req.cookies.token ? true : false;
+      res.render('Generate', { title: 'Generate Pokemons', pokemonList: genereretPokemoner, Mega: !!CheckMega, Gmax: !!CheckGmax, Unbreedable: !!CheckUnbreedable, Basic: !!CheckBasic,  slider: parseInt(slider), sliderInput: parseInt(sliderInput), sliderMax: sliderMax, loggedIn: loggedIn });
     });
+});
+
+
 
 module.exports = router;

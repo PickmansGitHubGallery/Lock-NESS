@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 const fs = require('fs');
 const path = require('path');
+const db = require('../database/db.js');
 
 
 async function CreatePokemonList() {
@@ -158,10 +159,42 @@ async function fetchPokemonImages(pokemonList) {
       }
   }
 }
-
+async function fetchEvolutionData() {
+  try {
+    const pokemonList = await db.getAllPokemons();
+    const updatedPokemonList = await Promise.all(
+      pokemonList.map(async pokemon => {
+        try {
+          const pokemonDetails = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.Pokemonid}/`);
+          const PokemonInfo = await pokemonDetails.json();
+         
+          let evolve_from = null;
+          if (PokemonInfo.evolves_from_species !== null) {
+            const evolvesFromUrl = PokemonInfo.evolves_from_species.url;
+            evolve_from = evolvesFromUrl ? evolvesFromUrl.split('/').filter(Boolean).pop() : null;
+          }
+            
+          return {
+            ...pokemon,
+            evolve_from: evolve_from
+          };
+        } catch (error) {
+          console.error(`Error processing details for ${pokemon.name}:`, error);
+          return pokemon;
+        }
+      })
+    );
+  
+    return updatedPokemonList;
+  } catch (error) {
+    console.error('Error updating Pokemon attributes:', error);
+    throw error;
+  }
+}
 
 module.exports = {
   updatePokemonAttributes: updatePokemonAttributes,
   UpdateGmaxAndMega: UpdateGmaxAndMega,
-  fetchPokemonImages:  fetchPokemonImages
+  fetchPokemonImages:  fetchPokemonImages,
+  fetchEvolutionData: fetchEvolutionData
 };

@@ -409,7 +409,6 @@ nav {
   text-decoration: none;
   display: block;
   font-family: 'Press Start 2P', cursive;
-
 }
 .index-p{
   text-align: center;
@@ -421,4 +420,24 @@ nav {
 .index-p img {
   max-width: 29%; /* Adjust the percentage as needed */
   height: auto;   /* This ensures the aspect ratio is maintained */
+}
+.context-menu {
+  display: none;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 0;
+  list-style: none;
+  z-index: 1000;
+}
+.context-menu li {
+  font-size: 0.7vw; /* Use vw unit for font size */
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.context-menu li:hover {
+  background-color: #f0f0f0;
 }

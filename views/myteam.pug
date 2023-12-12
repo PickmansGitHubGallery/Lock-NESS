@@ -73,13 +73,80 @@ block content
               }
             });
       }});
+    function showContextMenu(event, element) {
+      event.preventDefault();
+      const contextMenu = document.getElementById('contextMenu');
+      const x = event.clientX;
+      const y = event.clientY;
+
+      // Clear previous items in the context menu
+      contextMenu.innerHTML = '';
+
+      // You can get specific data related to the clicked Pokemon element here
+      const originalPokemonID = element.getAttribute('data-pokemonid');
+
+      fetch(`/pokemon/details?id=${originalPokemonID}`) // Use clickID instead of pokemonId
+        .then(response => response.json())
+        .then(pokemonDetails => {
+          // Populate the context menu with fetched Pokemon details (IDs and types)
+          pokemonDetails.forEach(({ Pokemonid, Type }) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `ID: ${Pokemonid} - ${Type}`;
+            listItem.addEventListener('click', () => {
+              // Perform action based on the selected Pokemon name and the specific Pokemon element
+              fetch('/updateEvolved', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ originalPokemonID: originalPokemonID, PokemonId: Pokemonid }) // Use Pokemonid instead of PokemonId
+              })
+                .then(response => {
+                  if (response.ok) {
+                    // Reload the page only when the response is successful
+                    hideContextMenu();
+                    location.reload(); // Reload the page after successful update
+                  } else if (response.status === 400) {
+                    // Handle a specific status code (400) with an alert
+                    alert('Invalid nickname');
+                  } else {
+                    // Handle other status codes if needed
+                    console.log('Unexpected status code:', response.status);
+                  }
+                })
+                .catch(error => {
+                  // Handle network errors or any other issues with the request
+                  console.error('Request failed:', error);
+                });
+            });
+            contextMenu.appendChild(listItem);
+          });
+        })
+        .catch(error => {
+          // Handle fetch error when retrieving Pokemon details
+          console.error('Fetching Pokemon details failed:', error);
+        });
+
+      // Show the context menu at the clicked coordinates
+      contextMenu.style.display = 'block';
+      contextMenu.style.left = `${x}px`;
+      contextMenu.style.top = `${y}px`;
+
+      // Hide the context menu when clicking outside of it
+      document.addEventListener('click', hideContextMenu);
+    } 
+
+    function hideContextMenu() {
+      const contextMenu = document.getElementById('contextMenu');
+      contextMenu.style.display = 'none';
+      document.removeEventListener('click', hideContextMenu);
+      }
   div(style='position: fixed; bottom: 22%; left: 25%; width: 50%; text-align: center;')
   h1 Add new pokemon
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
     button#submitBtn(type='submit') Add pokemon
   br
-    
   .pokemon-info
     img(src="/images/icon.png", alt="Pokemon Icon", width="50", height="50")
     .info-box
@@ -87,12 +154,15 @@ block content
         p When you move a pokemon to the graveyard it cannot be recovered
         p You can only have 6 pokemon in your team
         p You can only have 1 pokemon of the same type anywhere
-
+  ul.context-menu#contextMenu
+    li#option1 Option 1
+    li#option2 Option 2
+    li#option3 Option 3
   div(style='position: absolute; top: 0; left: 40px; text-align: center; width: calc(25% - 80px);')
     h2 Box
   #box(class='pokemon-box' data-location='box')
     each pokemon in boxPokemons
-      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true", oncontextmenu="showContextMenu(event, this)")
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
          

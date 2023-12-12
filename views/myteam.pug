@@ -5,6 +5,7 @@ block content
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
   script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js') 
   link(rel='stylesheet', href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') 
+  body(style=`background-image: url('/images/pok.jpg'); background-size: cover;`)
   script(src='/scripts/drag.js')
   script.
     $(document).ready(function(){
@@ -142,7 +143,6 @@ block content
       document.removeEventListener('click', hideContextMenu);
       }
   div(style='position: fixed; bottom: 22%; left: 25%; width: 50%; text-align: center;')
-  h1 Add new pokemon
   form#pokemonForm.centered-form(method='POST' action='/myTeamSearchBar')
     input#searchBar(type='text', name='pokemonSearch', placeholder='Search...')
     button#submitBtn(type='submit') Add pokemon
@@ -167,8 +167,8 @@ block content
         p.small-font= pokemon.Nickname
         img(src=`/sprites/${pokemon.Pokemonid}.png`)
          
-  div(style='position: fixed; bottom: 22%; left: 33%; width: 30%; text-align: center;')
-    h2 Team 
+  
+  h2.team-text Team
   #team(class='pokemon-box' data-location='team')
     each pokemon in teamPokemons
       .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true",oncontextmenu="showContextMenu(event, this)")

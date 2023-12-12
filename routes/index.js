@@ -7,7 +7,7 @@ const pokemonListe = require('../Utilities/generatePokemonList.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   pokemonListe.filterPokemons(0,0,1,1);
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Lock-Ness' });
 });
 
 

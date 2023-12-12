@@ -10,7 +10,7 @@ router.post('/', function(req, res, next) {
       db.getUserByToken(token)
         .then((userData) => {
           if (userData) {
-            db.insertPokemonListIntoTeam(parsedPokemonList, userData.Userid, 1)
+            db.insertPokemonListIntoTeam(parsedPokemonList, 1, userData.Userid,)
               .then(() => {
                 res.status(200).send('Pokémon successfully inserted into team');
               })

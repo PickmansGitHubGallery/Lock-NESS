@@ -315,8 +315,8 @@ h2{
 
 .pokemon-info {
   position: fixed;
-  top: 16vw;
-  left: 23vw;
+  bottom: 20vw;
+  left: 25vw;
   cursor: pointer; /* Show pointer cursor on hover */
   display: inline-block; /* Ensure hover area covers the image */
   position: relative; /* Required for absolute positioning of .info-box */
@@ -395,4 +395,19 @@ nav {
   height: 7vw;
   border-radius: 50%;
   transition: 1s;
+}
+
+.logOut {
+  position:absolute;
+  top:0;
+  right:0;
+  
+}
+.logOut button {
+  font-size: 0.7vw; /* Use vw unit for font size */
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+
 }

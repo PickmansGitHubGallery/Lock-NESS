@@ -232,6 +232,17 @@ async function getEvolutions(inputID) {
     });
   });
 }
+async function updateEvolved(pokemonId, userID, newPokemonId) {
+  return new Promise((resolve, reject) => {
+    db.run('UPDATE team SET Pid = ? WHERE Pid = ? AND Uid = ?', [newPokemonId, pokemonId, userID], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
 
   module.exports = {
     createUser,
@@ -248,5 +259,6 @@ async function getEvolutions(inputID) {
     insertPokemonListIntoTeam,
     updateNickname,
     insertEvolvedPokemonIntoDB,
-    getEvolutions
+    getEvolutions,
+    updateEvolved
   };

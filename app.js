@@ -20,6 +20,7 @@ var searchRouter = require('./routes/myTeamSearchBar');
 var generateButtonRouter = require('./routes/generateToBox');
 var updateNameRouter = require('./routes/updateName');
 var evolveRouter = require('./routes/evolve');
+var updateEvolvedRouter = require('./routes/updateEvolved');
 
 const db = require('./database/db.js');
 var app = express();
@@ -47,6 +48,7 @@ app.use('/myTeamSearchBar', searchRouter);
 app.use('/generateToBox', generateButtonRouter);
 app.use('/updateName', updateNameRouter);
 app.use('/pokemon/details*', evolveRouter);
+app.use('/updateEvolved', updateEvolvedRouter);
 
 
 

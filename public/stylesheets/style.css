@@ -420,6 +420,10 @@ nav {
   z-index: 1000;
 }
 .context-menu li {
+  font-size: 0.7vw; /* Use vw unit for font size */
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
   padding: 8px 15px;
   cursor: pointer;
 }

@@ -200,7 +200,27 @@ async function updateNickname(nickname, pokemonId, userID) {
     });
   });
 }
+async function insertEvolvedPokemonIntoDB(pokemonList) {
+  try {
+    db.serialize(() => {
+      const insertStatement = db.prepare('INSERT INTO Evolve (PokeID, EvolveFromID) VALUES (?, ?)');
 
+      pokemonList.forEach((pokemon) => {
+        const PokemonId = pokemon.Pokemonid;
+        const EvolveFrom = pokemon.evolve_from;
+        insertStatement.run(PokemonId, EvolveFrom);
+      });
+
+      insertStatement.finalize();
+    });
+    db.close();
+
+    console.log('Pokémon inserted into the database successfully.');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
   module.exports = {
     createUser,
@@ -215,5 +235,6 @@ async function updateNickname(nickname, pokemonId, userID) {
     updatePokemonLocation,
     insertPokemonIntoTeam,
     insertPokemonListIntoTeam,
-    updateNickname    
+    updateNickname,
+    insertEvolvedPokemonIntoDB
   };

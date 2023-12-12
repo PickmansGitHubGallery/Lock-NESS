@@ -47,19 +47,6 @@ app.use('/generateToBox', generateButtonRouter);
 app.use('/updateName', updateNameRouter);
 
 
-async function fetchAndStoreData() {
-  try {
-    const updatedPokemonList = await DataHandler.fetchEvolutionData();
-    console.log(updatedPokemonList); 
-  } catch (error) {
-    console.error('Error fetching and storing data:', error);
-  }
-}
-
-// Call the wrapper function to start fetching and storing data
-fetchAndStoreData();
-
-  
 
 app.use(function(req, res, next) {
   next(createError(404, 'Not Found'));

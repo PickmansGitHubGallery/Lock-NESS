@@ -141,6 +141,7 @@ a {
   width: 100%;
 }
 
+
 h1{
   text-align: center;
   margin-top: 50px;
@@ -181,18 +182,21 @@ h1{
   border: 1px solid #ccc;
   padding: 3px;
   margin-bottom: 20px;
+  
 }
 #team {
   position: fixed;
   bottom: 0;
   left: 26%;
   width: 48%; /* Span the width of the screen */
+  height: 22.5%;
   display: grid;
   grid-template-columns: repeat(6, minmax(15px, 1fr)); /* Six items wide */
   gap: 5px;
   border: 1px solid #ccc;
   padding: 3px;
   margin-bottom: 1%;
+  
 }
 #team,
 #box,
@@ -207,7 +211,11 @@ h1{
   border: 1px solid #aaa;
   border-radius: 5px;
   position: relative; /* Position elements within their container */
+  background-color: #f9f9f9;
+  
+
 }
+
 .pokemon-box {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
@@ -217,7 +225,9 @@ h1{
   padding: 10px;
   margin-bottom: 20px;
   margin-top: 10px;
-  background-image: 'pokeball.png';
+  background-color: rgba(255, 255, 255, 0.5);
+  
+
 }
 .pokemon {
   width: 100%;
@@ -236,6 +246,22 @@ h1{
 h2{
   font-family: 'Press Start 2P', cursive;
   font-size: 1.8vw;
+  background-color: #f9f9f9;
+  border-radius: 5px; 
+}
+
+.team-text{
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.8vw;
+  position: fixed; 
+  bottom: 25%; 
+  left: 40.5%; 
+  width: calc(25% - 80px);
+  text-align: center;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+
 }
 
 #graveyard .pokemon {
@@ -284,26 +310,28 @@ h2{
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  border: 1px solid #ccc;
+  /*border: 1px solid #ccc;*/
   width: 40%; /* Set the width to 40% of the page */
   margin: 0 auto; /* Center the form horizontally */
 }
 
 #searchBar {
   /* Adjust the styles for the search bar */
-  width: 100%;
+  width: 50%;
   padding: 10px;
   font-size: 16px;
   box-sizing: border-box; /* Include padding in the width */
+  border-radius: 5px;
 }
 
 #submitBtn {
   /* Modify the styles for the submit button */
   padding: 10px;
   font-size: 16px;
-  width: 100%;
+  width: 50%;
   height: auto;
   box-sizing: border-box; /* Include padding in the width */
+  border-radius: 5px;
 }
 .error-message {
   background-color: #f8d7da;
@@ -410,4 +438,8 @@ nav {
   display: block;
   font-family: 'Press Start 2P', cursive;
 
+}
+
+.pokemon-box p{
+  opacity: 1;
 }

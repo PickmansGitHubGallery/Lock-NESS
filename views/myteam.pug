@@ -154,6 +154,7 @@ block content
         p When you move a pokemon to the graveyard it cannot be recovered
         p You can only have 6 pokemon in your team
         p You can only have 1 pokemon of the same type anywhere
+        p You can right click on a pokemon to evolve it
   ul.context-menu#contextMenu
     li#option1 Option 1
     li#option2 Option 2
@@ -170,7 +171,7 @@ block content
     h2 Team 
   #team(class='pokemon-box' data-location='team')
     each pokemon in teamPokemons
-      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true")
+      .pokemon(data-pokemonid=pokemon.Pokemonid, draggable="true",oncontextmenu="showContextMenu(event, this)")
         p.small-font= pokemon.Nickname 
         img(src=`/sprites/${pokemon.Pokemonid}.png`)  
         

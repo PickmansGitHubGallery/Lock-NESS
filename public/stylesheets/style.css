@@ -343,8 +343,8 @@ h2{
 
 .pokemon-info {
   position: fixed;
-  bottom: 20vw;
-  left: 25vw;
+  bottom: 10vw;
+  left: 22vw;
   cursor: pointer; /* Show pointer cursor on hover */
   display: inline-block; /* Ensure hover area covers the image */
   position: relative; /* Required for absolute positioning of .info-box */
